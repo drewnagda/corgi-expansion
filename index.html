@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corgi Café Expansion · the launch playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+  :root{--stone:#F4F1EA;--stone2:#ECE7DC;--ink:#1A1A17;--muted:#6B675E;--line:#DAD3C5;
+    --card:#FBFAF6;--neon:#FF6B1A;--flag:#D2541F;--exp:#3A86E8;--corner:#15A88A;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--stone);color:var(--ink);font-family:"Source Sans 3",system-ui,sans-serif;
+    line-height:1.5;text-transform:lowercase;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,.mono,button,.wm,.navtab{font-family:"Montserrat",sans-serif}
+  .top{position:sticky;top:0;z-index:600;background:var(--ink);color:#fff;display:flex;justify-content:space-between;
+    align-items:center;padding:10px 18px;flex-wrap:wrap;gap:10px}
+  .wm{font-weight:800;font-size:16px;letter-spacing:-.2px}.wm i{color:var(--neon);font-style:normal}
+  .nav{display:flex;gap:6px;background:#2a2823;border-radius:999px;padding:4px}
+  .navtab{border:none;background:transparent;color:#cfccc4;font-weight:700;font-size:12.5px;padding:6px 16px;border-radius:999px;cursor:pointer}
+  .navtab.on{background:var(--neon);color:var(--ink)}
+  .counter{display:flex;align-items:center;gap:9px;font-family:"Montserrat";font-size:12px;color:#cfccc4}
+  .counter b{color:#fff;font-weight:800;font-size:15px}
+  .cbar{width:96px;height:6px;background:#3a382f;border-radius:99px;overflow:hidden}
+  .cbar i{display:block;height:100%;background:var(--neon);width:1%;transition:width .4s}
+  .view{display:none}
+  .hero{max-width:1000px;margin:0 auto;padding:20px 18px 6px}
+  .tag{display:inline-block;background:var(--neon);color:var(--ink);font-family:"Montserrat";font-weight:700;font-size:10.5px;letter-spacing:.6px;padding:4px 9px;border-radius:999px;margin-bottom:10px}
+  .hero h1{font-size:26px;font-weight:800;letter-spacing:-.5px;margin:0 0 8px;line-height:1.06}
+  .lloyd{background:var(--ink);color:#fff;border-radius:13px;padding:12px 15px;font-size:13px;line-height:1.5;max-width:730px}
+  .lloyd b{font-family:"Montserrat";color:var(--neon)}
+  .regiontabs{max-width:1000px;margin:14px auto 0;padding:0 18px;display:flex;gap:8px;flex-wrap:wrap}
+  .rtab{font-family:"Montserrat";font-weight:700;font-size:12.5px;padding:8px 15px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+  .rtab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .rtab small{display:block;font-weight:600;font-size:10px;opacity:.7;text-transform:none}
+  .mapwrap{max-width:1000px;margin:10px auto 0;padding:0 18px}
+  #map{height:520px;border-radius:16px;border:1px solid var(--line);z-index:1}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin:10px 2px 0;font-size:12px;color:var(--muted);font-family:"Montserrat";font-weight:600}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .ld{width:11px;height:11px;border-radius:50%}
+  .sec{max-width:1000px;margin:0 auto;padding:8px 18px}
+  h2.k{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin:24px 0 12px;font-weight:700}
+  .spotlight{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--neon);border-radius:14px;padding:16px}
+  .spotlight h3{margin:0 0 3px;font-size:18px}
+  .spotlight .addr{font-size:12px;color:var(--muted);font-family:"Montserrat";font-weight:600;margin-bottom:8px}
+  .spotlight p{margin:0;font-size:13.5px}
+  /* PLAYBOOK */
+  .pb{max-width:660px;margin:0 auto;padding:30px 22px 20px}
+  .pb .eyebrow{font-family:"Montserrat";font-weight:700;font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)}
+  .pb h1{font-family:"Montserrat";font-weight:800;font-size:40px;line-height:1.02;letter-spacing:-1px;margin:8px 0 14px}
+  .pb .lede{font-size:17px;line-height:1.55;margin:0 0 8px}
+  .knot{display:block;margin:22px auto 6px;width:150px;height:150px}
+  .chapter{max-width:660px;margin:0 auto;padding:22px 22px}
+  .chapter .num{font-family:"Montserrat";font-weight:800;font-size:13px;color:var(--neon);background:var(--ink);display:inline-block;padding:3px 10px;border-radius:999px;letter-spacing:.5px}
+  .chapter h2{font-family:"Montserrat";font-weight:800;font-size:25px;letter-spacing:-.4px;margin:12px 0 10px;line-height:1.1}
+  .chapter p{font-size:16px;line-height:1.62;margin:0 0 14px}
+  .chapter p b{font-family:"Montserrat";font-weight:700}
+  .pull{border-left:3px solid var(--neon);padding:4px 0 4px 16px;font-size:18px;line-height:1.45;font-family:"Montserrat";font-weight:600;margin:18px 0}
+  .prec{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
+  .prec .p{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px}
+  .prec .p .co{font-family:"Montserrat";font-weight:800;font-size:14px}
+  .prec .p .ls{font-size:12.5px;color:var(--muted);margin-top:3px;line-height:1.42}
+  @media(max-width:620px){.prec{grid-template-columns:1fr}}
+  .ladder{display:grid;grid-template-columns:1fr;gap:10px;margin:14px 0 4px}
+  .fmt{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;border-left:4px solid;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .fmt .l h3{margin:0 0 1px;font-size:15px}.fmt .l .meta{font-size:11.5px;color:var(--muted);font-family:"Montserrat";font-weight:600}
+  .fmt .t{font-family:"Montserrat";font-weight:800;font-size:18px;white-space:nowrap}
+  .roll{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:14px 0}
+  .mo{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 6px;text-align:center}
+  .mo .m{font-family:"Montserrat";font-weight:700;font-size:10px;color:var(--muted);text-transform:uppercase}
+  .mo .cum{font-family:"Montserrat";font-weight:800;font-size:17px;margin:2px 0}
+  .mo .gbar{height:34px;background:var(--stone2);border-radius:5px;overflow:hidden;display:flex;align-items:flex-end}
+  .mo .gbar i{display:block;width:100%;background:var(--ink);border-radius:5px 5px 0 0}
+  .divider{max-width:660px;margin:6px auto;border-top:1px solid var(--line)}
+  .cta{background:var(--ink);color:#fff;border-radius:16px;padding:24px;margin:18px auto;max-width:660px;text-align:center}
+  .cta h2{font-family:"Montserrat";font-size:22px;margin:0 0 8px;color:#fff}
+  .cta p{font-size:14px;color:#cfccc4;margin:0 auto;max-width:520px;line-height:1.55}
+  .cta .sig{color:var(--neon);font-family:"Montserrat";font-weight:700;margin-top:12px}
+  .foot{text-align:center;color:var(--muted);font-size:11px;padding:8px 18px 50px;line-height:1.6}
+  .sop{max-width:720px;margin:0 auto;padding:26px 20px 30px}
+  .sop h1{font-family:"Montserrat";font-weight:800;font-size:30px;letter-spacing:-.5px;margin:10px 0 8px;line-height:1.06}
+  .phase{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:0 0 12px;border-left:5px solid var(--ink)}
+  .phase.p0{border-left-color:var(--flag)}.phase.p1{border-left-color:var(--exp)}.phase.p2{border-left-color:#b08900}.phase.p3{border-left-color:var(--corner)}
+  .phase .ph{font-family:"Montserrat";font-weight:800;font-size:11.5px;letter-spacing:.5px;color:var(--muted);text-transform:uppercase}
+  .phase h3{font-family:"Montserrat";font-size:18px;margin:3px 0 10px}
+  .chk{display:flex;gap:9px;font-size:14px;line-height:1.45;padding:5px 0;align-items:flex-start}
+  .chk .b{flex:none;width:16px;height:16px;border:2px solid var(--line);border-radius:5px;margin-top:2px}
+  .chk b{font-family:"Montserrat";font-weight:700}
+  .note2{background:#FBEFE7;border-left:3px solid var(--flag);padding:9px 12px;border-radius:0 8px 8px 0;font-size:13px;margin:8px 0 2px}
+  .kit{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:6px 0}
+  .kit .col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+  .kit .col h4{font-family:"Montserrat";font-weight:800;font-size:14px;margin:0 0 8px}
+  .kit ul{margin:0;padding-left:16px;font-size:13px}.kit li{margin-bottom:4px}
+  .bignote{background:var(--ink);color:#fff;border-radius:14px;padding:15px 17px;margin:0 0 16px;font-size:14px;line-height:1.5}
+  .bignote b{font-family:"Montserrat";color:var(--neon)}
+  @media(max-width:620px){.kit{grid-template-columns:1fr}}
+  .sounds{display:grid;grid-template-columns:1fr;gap:8px;margin:8px 0}
+  .day{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+  .day .hr{font-family:"Montserrat";font-weight:800;font-size:13px;min-width:74px}
+  .day .mood{flex:1}.day .mood .mt{font-family:"Montserrat";font-weight:700;font-size:13.5px}
+  .day .mood .md{font-size:12px;color:var(--muted)}
+  .day .bpm{font-family:"Montserrat";font-weight:700;font-size:11px;color:#fff;background:var(--corner);border-radius:6px;padding:2px 7px;white-space:nowrap}
+  .vote{max-width:620px;margin:0 auto;padding:26px 20px 40px}
+  .vote h1{font-family:"Montserrat";font-weight:800;font-size:30px;letter-spacing:-.5px;margin:10px 0 8px;line-height:1.06}
+  .voteform{display:flex;gap:8px;flex-wrap:wrap;background:var(--stone2);border:1px dashed var(--line);border-radius:14px;padding:14px;margin:14px 0}
+  .voteform input,.voteform select{font-family:"Source Sans 3";font-size:14px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:#fff;text-transform:lowercase}
+  .voteform input{flex:1;min-width:150px}
+  .voteform button{font-family:"Montserrat";font-weight:700;font-size:13px;padding:10px 18px;border:none;border-radius:9px;background:var(--neon);color:var(--ink);cursor:pointer}
+  .vmsg{font-size:13px;font-family:"Montserrat";font-weight:600;margin:2px;min-height:18px}
+  .vcity{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin:0 0 9px}
+  .vcity.unlocked{border-color:var(--neon);box-shadow:0 0 0 2px rgba(255,107,26,.35)}
+  .vcity .vh{display:flex;justify-content:space-between;align-items:baseline}
+  .vcity .vn{font-family:"Montserrat";font-weight:700;font-size:15px}
+  .vcity .vc{font-family:"Montserrat";font-weight:700;font-size:12.5px;color:var(--muted)}
+  .vbar{height:8px;background:var(--stone2);border-radius:99px;overflow:hidden;margin-top:7px}
+  .vbar i{display:block;height:100%;background:var(--ink);border-radius:99px;transition:width .5s}
+  .vcity.unlocked .vbar i{background:var(--neon)}
+  .votecta{display:inline-block;font-family:"Montserrat";font-weight:700;font-size:13px;background:var(--neon);color:var(--ink);padding:9px 15px;border-radius:10px;border:none;cursor:pointer;margin-top:12px}
+  .herobtns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .herobtns .votecta{margin-top:0}
+  .runbtn{font-family:"Montserrat";font-weight:800;font-size:13px;padding:9px 18px;border:none;border-radius:10px;background:var(--neon);color:var(--ink);cursor:pointer;box-shadow:0 3px 14px rgba(255,107,26,.4)}
+  .runbtn:hover{filter:brightness(1.06)}
+  .knot .cut{stroke-dasharray:170;stroke-dashoffset:170;animation:cut 1.05s cubic-bezier(.7,0,.3,1) .35s forwards}
+  @keyframes cut{to{stroke-dashoffset:0}}
+  .sopprog{height:9px;background:var(--stone2);border-radius:99px;overflow:hidden;margin:12px 0 4px}
+  .sopprog i{display:block;height:100%;width:3%;background:var(--neon);transition:width .35s}
+  #sopct{font-family:"Montserrat";font-weight:700;font-size:11px;color:var(--muted);margin-bottom:6px;letter-spacing:.3px}
+  .chk{cursor:pointer}
+  .chk .b.done{background:var(--neon);border-color:var(--neon);position:relative}
+  .chk .b.done:after{content:"✓";position:absolute;left:2px;top:-3px;color:var(--ink);font-size:12px;font-weight:800;font-family:"Montserrat"}
+  .vcity.unlocked{animation:popin .5s ease}
+  @keyframes popin{0%{transform:scale(1)}45%{transform:scale(1.025)}100%{transform:scale(1)}}
+  .leaflet-popup-content{font-family:"Source Sans 3";text-transform:lowercase;margin:12px 14px}
+  .pop .pn{font-family:"Montserrat";font-weight:800;font-size:15px}
+  .pop .pf{font-family:"Montserrat";font-weight:700;font-size:9.5px;letter-spacing:.4px;text-transform:uppercase;color:#fff;padding:2px 7px;border-radius:5px;display:inline-block;margin:4px 0 6px}
+  .pop .pw{font-size:12.5px;color:#444;margin-bottom:8px}
+  .pop button{font-family:"Montserrat";font-weight:700;font-size:12px;border:none;border-radius:8px;padding:7px 12px;background:var(--ink);color:#fff;cursor:pointer;width:100%}
+  .pop .livetag{font-family:"Montserrat";font-weight:700;font-size:12px;color:var(--corner)}
+  @media(max-width:620px){.roll{grid-template-columns:repeat(3,1fr)}#map{height:430px}.pb h1{font-size:32px}}
+</style>
+<body>
+  <div class="top">
+    <div class="wm">corgi café <i>expansion</i></div>
+    <div class="nav">
+      <button class="navtab on" data-v="map" onclick="show('map')">map</button>
+      <button class="navtab" data-v="playbook" onclick="show('playbook')">playbook</button>
+      <button class="navtab" data-v="sop" onclick="show('sop')">launch sop</button>
+      <button class="navtab" data-v="vote" onclick="show('vote')">vote</button>
+    </div>
+    <div class="counter"><span><b id="liveN">1</b> / 32 secured</span><div class="cbar"><i id="cbar"></i></div></div>
+  </div>
+
+  <!-- ============ MAP VIEW ============ -->
+  <div class="view" id="view-map" style="display:block">
+    <div class="hero">
+      <span class="tag">the campaign map · concept by drew nagda</span>
+      <h1>start at HQ, then take the country cluster by cluster.</h1>
+      <div class="lloyd"><b>every dot is a real vc cluster</b>, the actual blocks where founders and the capital that funds them sit. we don't open in "cities," we take territory: secure the bay, then the coasts, then inland, then the frontier. press play and watch it run.</div>
+      <div class="herobtns">
+        <button class="runbtn" onclick="runCampaign()">▶ run the campaign</button>
+        <button class="votecta" onclick="show('vote')">📍 vote your city in →</button>
+      </div>
+    </div>
+
+    <div class="regiontabs" id="regiontabs">
+      <button class="rtab on" data-w="all" onclick="setWave('all')">full campaign<small>all 32 clusters</small></button>
+      <button class="rtab" data-w="1" onclick="setWave(1)">wave I<small>the home front · bay</small></button>
+      <button class="rtab" data-w="2" onclick="setWave(2)">wave II<small>the coasts</small></button>
+      <button class="rtab" data-w="3" onclick="setWave(3)">wave III<small>inland</small></button>
+      <button class="rtab" data-w="4" onclick="setWave(4)">wave IV<small>the frontier</small></button>
+    </div>
+
+    <div class="mapwrap">
+      <div id="map"></div>
+      <div class="legend">
+        <span><i class="ld" style="background:var(--flag)"></i>flagship 24/7</span>
+        <span><i class="ld" style="background:var(--exp)"></i>express counter</span>
+        <span><i class="ld" style="background:var(--corner)"></i>corgi corner</span>
+        <span><i class="ld" style="background:#FF6B1A;box-shadow:0 0 0 2px var(--ink)"></i>secured</span>
+        <span style="color:var(--ink)">tap a target → "take it"</span>
+      </div>
+    </div>
+
+    <div class="sec">
+      <h2 class="k">the beachhead · location 01</h2>
+      <div class="spotlight">
+        <h3>corgi café · 9 claude lane, sf</h3>
+        <div class="addr">financial district · open 24/7 · profitable · the template</div>
+        <p>the proof and the launch point. from here we secure the bay (soma, then <b>sand hill road</b>, the densest vc cluster on earth) before taking the coasts, the inland strongholds, and the frontier. 32 clusters anchor the 100. see the <b>playbook tab</b> for how each one opens.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PLAYBOOK VIEW ============ -->
+  <div class="view" id="view-playbook">
+    <div class="pb">
+      <div class="eyebrow">the launch playbook · corgiexpansion.com</div>
+      <h1>don't untie the knot.<br>cut it.</h1>
+      <p class="lede">100 cafés in 6 months is one launch every 1.8 days. you can't brute-force that with full builds. this is the launch model that hits the number, built from how the fastest physical-rollout companies actually did it.</p>
+      <svg class="knot" viewBox="0 0 120 120" fill="none">
+        <g stroke="#1A1A17" stroke-width="7" stroke-linecap="round">
+          <path d="M30 30 C60 50 60 70 90 90"/>
+          <path d="M90 30 C60 50 60 70 30 90"/>
+          <path d="M30 60 C50 60 70 60 90 60" opacity=".5"/>
+          <circle cx="60" cy="60" r="34" opacity=".25"/>
+        </g>
+        <line class="cut" x1="14" y1="104" x2="112" y2="20" stroke="#FF6B1A" stroke-width="6" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="chapter">
+      <span class="num">i · the launch math</span>
+      <h2>you can't build 100 cafés in six months</h2>
+      <p>100 launches in 6 months is <b>one café every 1.8 days.</b> no team full-builds 100 round-the-clock flagships in that window. promise it and you miss.</p>
+      <p>the real constraint is three things at once: <b>speed, capital, and demand.</b> solve them in sequence and the math beats you. the model below runs them in parallel.</p>
+    </div>
+
+    <div class="chapter">
+      <span class="num">ii · the format ladder</span>
+      <h2>so build a few, host the rest</h2>
+      <p>alexander cut the knot rather than pick at it. our cut is the <b>format ladder.</b> most of the 100 are not cafés you build, they are <b>corners you place.</b> three formats, matched to each market:</p>
+      <div class="ladder">
+        <div class="fmt" style="border-left-color:var(--flag)"><div class="l"><h3>flagship 24/7</h3><div class="meta">months · $150–350k · anchor cities</div></div><div class="t" style="color:var(--flag)">~8</div></div>
+        <div class="fmt" style="border-left-color:var(--exp)"><div class="l"><h3>express counter</h3><div class="meta">weeks · $30–80k · grab-and-go</div></div><div class="t" style="color:var(--exp)">~28</div></div>
+        <div class="fmt" style="border-left-color:var(--corner)"><div class="l"><h3>corgi corner (host-embedded)</h3><div class="meta">days · &lt;$10k · hosts + partner cafés</div></div><div class="t" style="color:var(--corner)">~64</div></div>
+      </div>
+      <div class="pull">~64 corners + ~28 express + ~8 flagships = 100. the knot is cut.</div>
+    </div>
+
+    <div class="chapter">
+      <span class="num">iii · site selection</span>
+      <h2>start at HQ, then expand where the capital flows</h2>
+      <p>uber put cars where the riders were. we put cafés where the risk-takers are. at the early stage, founders and the capital that funds them sit on the same blocks: <b>sand hill road, soma, flatiron, kendall square.</b> open in the cluster and density does the work.</p>
+      <p><b>route to demand, don't hunt for it.</b> inbound "come here" requests rank the pipeline, so every site opens to a crowd that already asked for it. zero guesswork siting.</p>
+      <p><b>go where partners already operate.</b> embed in coworking spaces, accelerators, and partner startups. they hold the room; you bring the brand and the funnel.</p>
+      <div class="roll" id="roll2"></div>
+    </div>
+
+    <div class="chapter">
+      <span class="num">iv · the launch playbook</span>
+      <h2>borrow the playbook that already works</h2>
+      <p>this is not theory. it is the documented go-to-market of every company that scaled physical operations fast:</p>
+      <div class="prec">
+        <div class="p"><div class="co">uber</div><div class="ls">a 3-person city team (a general manager owning the p&l, supply ops, demand marketing) ran a 180-step launch playbook. by 2014 they opened a city a day.</div></div>
+        <div class="p"><div class="co">doordash</div><div class="ls">"launchers" research a market, sign merchants door to door, and open it in <b>6 to 8 weeks</b> off a checklist.</div></div>
+        <div class="p"><div class="co">airbnb</div><div class="ls">spread across too many markets, stalled, then <b>validated one market</b> (the bay) and scaled from proven ground.</div></div>
+        <div class="p"><div class="co">wework</div><div class="ls">went <b>asset-light</b>, plugging <b>existing operators</b> into the network instead of building every site.</div></div>
+      </div>
+      <p>so the corgi model is set: a small <b>launch pod</b> per market (a launcher running site to open, a host lead locking the partner space, a community lead filling the room), one <b>general manager</b> owning each city's p&l, and one <b>launch playbook</b> (this site) that gets tighter every open.</p>
+      <div class="pull">validate one market like airbnb. launch lean like uber. go asset-light like wework.</div>
+      <p><b>the demand is already inbound.</b> startup hubs are asking us to come, and a real share of the 100 are <b>corgi corners hosted inside existing cafés</b> and coworking spaces that want the partnership. free distribution, a built-in crowd, day-one goodwill.</p>
+    </div>
+
+    <div class="chapter">
+      <span class="num">v · why a café</span>
+      <h2>this is how insurance actually started</h2>
+      <p>in 1688, lloyd's coffee house became lloyd's of london. not because anyone decided a café should sell insurance, but because the people making risky bets already gathered there to share information and price risk.</p>
+      <p>corgi café runs the same play. <b>insurance works best close to the people taking the risk.</b> founders today, then the truckers and small-business owners corgi serves next, including the latino small-business market i reach directly.</p>
+      <div class="pull">lloyd's served shipowners. corgi's serves founders, then every vertical after.</div>
+    </div>
+
+    <div class="cta">
+      <h2>let's open the hundred.</h2>
+      <p>a corgi café in every US startup hub, and more corgi cafés than starbucks. the model is built, the map is drawn, the playbook is ready.</p>
+      <div class="sig">drew nagda · corgiexpansion.com</div>
+    </div>
+    <div class="foot">a living document, updated as locations open · concept for discussion, not official corgi data · last revised jun 2026</div>
+  </div>
+
+  <!-- ============ LAUNCH SOP VIEW ============ -->
+  <div class="view" id="view-sop">
+    <div class="sop">
+      <span class="tag">the playbook within the playbook</span>
+      <h1>the 30-day launch sop</h1>
+      <p style="font-size:15px;color:var(--muted);margin:0 0 14px">one repeatable sprint, run by the launch pod. order the long-lead items on day one, build, dial in, soft-launch, open, then hand the city's p&l to a gm. refined after every location, so #100 is easier than #2.</p>
+
+      <div class="bignote"><b>the two non-negotiables :</b> founders fall for a café for exactly two reasons: <b>bulletproof wifi</b> and <b>great coffee</b>. everything else supports those two. be perfect on wifi + coffee + an outlet at every seat; good-enough on the rest.</div>
+
+      <div class="sopprog"><i id="sopbar"></i></div>
+      <div id="sopct">tap a step to check it off</div>
+
+      <div class="phase p0">
+        <div class="ph">phase 0 · day 1–3 · lock and order the long leads</div>
+        <h3>the stuff that delays you if you wait</h3>
+        <div class="chk"><span class="b"></span><span>sign the host/partner or lease agreement; confirm zoning allows <b>food service + assembly</b>.</span></div>
+        <div class="chk"><span class="b"></span><span><b>order business internet, day one.</b> the #1 delay risk; install often runs <b>2–6+ weeks</b>. business fiber, 500–1000 mbps, strong upload, sla 99.9%.</span></div>
+        <div class="chk"><span class="b"></span><span><b>order espresso machine + grinder</b> (6–12 wk lead if new; corners use the pre-stocked kit or the host's setup).</span></div>
+        <div class="chk"><span class="b"></span><span>open a wholesale account with a <b>local roaster</b>; schedule recurring fresh-bean delivery.</span></div>
+        <div class="chk"><span class="b"></span><span>file permits: business license, food service / health permit, seller's permit, food-handler certs, signage, music license (ascap/bmi).</span></div>
+        <div class="note2"><b>operator move:</b> request a <b>pre-buildout health-inspector walkthrough</b>. catching a misplaced handwashing sink before tile is laid saves ~$2–5k and 3 weeks.</div>
+      </div>
+
+      <div class="phase p1">
+        <div class="ph">phase 1 · week 1–2 · build and connect</div>
+        <h3>the room, the coffee, the wifi</h3>
+        <div class="chk"><span class="b"></span><span>cosmetic buildout (target a <b>2nd-gen space</b> with plumbing already in). electrical: <b>an outlet at every seat</b> + usb-c.</span></div>
+        <div class="chk"><span class="b"></span><span>install wifi right: business router/firewall, <b>2–4 mesh access points</b> for full coverage, managed switch, <b>separate pos vlan + guest network</b>, <b>lte/5g failover</b> so it never drops.</span></div>
+        <div class="chk"><span class="b"></span><span>gate guest wifi behind a <b>corgi splash page</b> (email / sso), the wifi login becomes the conversion funnel.</span></div>
+        <div class="chk"><span class="b"></span><span>install <b>water filtration</b> (coffee is ~98% water, taste + machine life), plumb the espresso machine, set fridge / ice / blender.</span></div>
+        <div class="chk"><span class="b"></span><span>set up pos + payments; load the <b>co-branded menu</b>.</span></div>
+        <div class="chk"><span class="b"></span><span>stock consumables to par: beans, milk + alts, cups/lids, syrups, pastries.</span></div>
+      </div>
+
+      <div class="phase p2">
+        <div class="ph">phase 2 · week 3 · dial in and soft launch</div>
+        <h3>get it right before anyone shows up</h3>
+        <div class="chk"><span class="b"></span><span><b>dial in espresso</b>, grind, dose, yield; calibrate every drink. fresh beans rested 3–14 days, used within ~30.</span></div>
+        <div class="chk"><span class="b"></span><span><b>stress-test wifi</b>, simulate 20+ devices on video calls; confirm failover holds. this is the product.</span></div>
+        <div class="chk"><span class="b"></span><span>train baristas; run a full dress rehearsal under load.</span></div>
+        <div class="chk"><span class="b"></span><span>soft launch to the local founder list (from inbound demand); collect feedback, kill friction.</span></div>
+        <div class="chk"><span class="b"></span><span>instrument conversion: qr → corgi, capture sign-ups, name the metric owner.</span></div>
+      </div>
+
+      <div class="phase p3">
+        <div class="ph">phase 3 · week 4 · open and hand off</div>
+        <h3>open, then hand it to a gm</h3>
+        <div class="chk"><span class="b"></span><span>grand opening + community event, free coffee + merch, like the sf launch.</span></div>
+        <div class="chk"><span class="b"></span><span>activate co-branded drink partners (the menu is the partnership funnel).</span></div>
+        <div class="chk"><span class="b"></span><span><b>gm takes the city's p&l</b>; shift to ops cadence + par-level reordering.</span></div>
+        <div class="chk"><span class="b"></span><span>measure unit economics + conversion vs threshold → <b>greenlight the next location</b>.</span></div>
+      </div>
+
+      <h2 class="k" style="margin-top:22px">the vibe layer, corgi sounds</h2>
+      <p style="font-size:13.5px;color:var(--muted);margin:0 0 8px">a café's vibe is sound + people. a curated <b style="color:var(--ink)">daypart soundtrack</b> ("corgi sounds") moves the energy through the 24-hour cycle, quiet focus at dawn, social buzz at golden hour, ship-it beats overnight. one playlist spec, every location, so a corgi café <i>feels</i> like one anywhere.</p>
+      <div class="sounds">
+        <div class="day"><div class="hr">6–10a</div><div class="mood"><div class="mt">deep focus</div><div class="md">ambient · lo-fi · instrumental, low volume</div></div><div class="bpm">60–85 bpm</div></div>
+        <div class="day"><div class="hr">10a–2p</div><div class="mood"><div class="mt">build mode</div><div class="md">upbeat indie / electronic, energizing not distracting</div></div><div class="bpm">90–115 bpm</div></div>
+        <div class="day"><div class="hr">2–6p</div><div class="mood"><div class="mt">collab</div><div class="md">warm, groovy, social, conversation-friendly</div></div><div class="bpm">100–120 bpm</div></div>
+        <div class="day"><div class="hr">6–10p</div><div class="mood"><div class="mt">golden hour</div><div class="md">soulful / jazzy / house, higher energy</div></div><div class="bpm">115–125 bpm</div></div>
+        <div class="day"><div class="hr">10p–6a</div><div class="mood"><div class="mt">ship-it</div><div class="md">downtempo focus beats for the all-nighters</div></div><div class="bpm">70–100 bpm</div></div>
+      </div>
+      <div class="note2" style="border-left-color:var(--corner);background:#EAF7F1"><b>curate the room, not just the sound:</b> seed every opening with high-status local founders (the rap-genius move), run founder office-hours + partner nights, and let the community lead keep the right people coming back. the vibe is who's in the room as much as what's playing.</div>
+
+      <h2 class="k" style="margin-top:22px">the materials kit, what you actually order</h2>
+      <div class="kit">
+        <div class="col"><h4>the coffee stack ☕</h4><ul>
+          <li>2-group espresso machine + espresso/drip grinders</li>
+          <li>batch brewer, knock box, tamper, scales</li>
+          <li><b>water filtration system</b></li>
+          <li>milk fridge, ice machine, blender</li>
+          <li>fresh-roasted beans (par) + milk &amp; alts</li>
+          <li>cups, lids, sleeves, syrups, pastries</li>
+        </ul></div>
+        <div class="col"><h4>the wifi + work stack 📶</h4><ul>
+          <li>business fiber 500–1000 mbps + sla</li>
+          <li>business router/firewall + 2–4 mesh access points</li>
+          <li>managed switch + lte/5g failover</li>
+          <li>guest-wifi captive portal (→ corgi funnel)</li>
+          <li>pos + card readers</li>
+          <li><b>outlet at every seat + usb-c</b>; 1–2 call nooks</li>
+        </ul></div>
+      </div>
+
+      <div class="bignote" style="background:var(--card);color:var(--ink);border:1px solid var(--line)"><b style="color:var(--ink)">what "great" means to a founder :</b> fast wifi that never drops a call · power everywhere · coffee worth the walk · comfortable, non-cramped seating · a place to take a call · long / 24-7 hours · a community you want to belong to. nail these and they don't just visit, they move in.</div>
+
+      <div class="foot" style="padding:6px 0 10px">a living document, refined after every open · concept for discussion, not official corgi data</div>
+    </div>
+  </div>
+
+  <!-- ============ VOTE VIEW ============ -->
+  <div class="view" id="view-vote">
+    <div class="vote">
+      <span class="tag">demand routing · vote your city in</span>
+      <h1>which city gets corgi next?</h1>
+      <p style="font-size:15px;color:var(--muted);margin:0 0 6px">founders already reach out, "we can't wait for corgi to come to ___." so make it official. <b style="color:var(--ink)">vote with your email; when a city hits 500, the launch pod deploys.</b> every vote also joins the corgi list, so you hear it first.</p>
+      <div class="voteform">
+        <input id="vEmail" type="email" placeholder="your email">
+        <select id="vCity"></select>
+        <button onclick="castVote()">cast your vote →</button>
+        <div class="vmsg" id="vMsg" style="width:100%"></div>
+      </div>
+      <div id="voteList"></div>
+      <p style="font-size:11px;color:var(--muted);margin-top:14px">concept prototype, votes are illustrative and reset on refresh. on the live site, each vote writes to corgi's list and trips the launch pod at 500.</p>
+    </div>
+  </div>
+
+  <div class="foot" id="mapfoot">concept prototype · routing = inbound demand × founder/VC density × host availability · not official corgi data · map © openstreetmap · carto</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+function show(v){
+  document.querySelectorAll('.view').forEach(e=>e.style.display='none');
+  document.getElementById('view-'+v).style.display='block';
+  document.querySelectorAll('.navtab').forEach(t=>t.classList.toggle('on',t.dataset.v===v));
+  document.getElementById('mapfoot').style.display=v==='map'?'block':'none';
+  if(v==='map'&&window._map){setTimeout(()=>window._map.invalidateSize(),60);}
+  if(v==='playbook'){var ln=document.querySelector('.knot .cut');if(ln){ln.style.animation='none';void ln.offsetWidth;ln.style.animation='';}}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+const C={flagship:'#D2541F',express:'#3A86E8',corner:'#15A88A'};
+const FL={flagship:'flagship 24/7',express:'express counter',corner:'corgi corner'};
+// region: which views a pin appears in
+let data=[
+ // ----- WAVE I · the home front (bay area) -----
+ {id:'sf',name:'san francisco',wave:1,lat:37.7905,lng:-122.4047,fmt:'flagship',live:true,why:'HQ · 9 claude lane. the beachhead. open 24/7 + profitable.'},
+ {id:'soma',name:'soma / south park',wave:1,lat:37.7785,lng:-122.3970,fmt:'express',live:false,why:'the original yc + seed-fund orbit, densest founder block in the city.'},
+ {id:'jackson',name:'jackson square',wave:1,lat:37.7965,lng:-122.4036,fmt:'corner',live:false,why:"fidi's vc row, where many funds now sit."},
+ {id:'sandhill',name:'sand hill road',wave:1,lat:37.4221,lng:-122.2030,fmt:'flagship',live:false,why:'menlo park. the densest vc cluster on earth: sequoia, a16z, kleiner, greylock, lightspeed. 60+ series a funds within 5 miles.'},
+ {id:'paloalto',name:'palo alto',wave:1,lat:37.4440,lng:-122.1610,fmt:'express',live:false,why:'university ave, stanford-adjacent. accel, felicis.'},
+ {id:'mtnview',name:'mountain view',wave:1,lat:37.3939,lng:-122.0790,fmt:'corner',live:false,why:'castro st, googleplex orbit.'},
+ {id:'oakland',name:'oakland',wave:1,lat:37.8044,lng:-122.2712,fmt:'express',live:false,why:'uptown / jack london. cheaper bay, fast-rising founders.'},
+ // ----- WAVE II · the coasts -----
+ {id:'nyflat',name:'flatiron, nyc',wave:2,lat:40.7400,lng:-73.9903,fmt:'flagship',live:false,why:"union square / flatiron. usv's home turf. 2nd-largest vc market on earth."},
+ {id:'nysoho',name:'soho, nyc',wave:2,lat:40.7250,lng:-74.0030,fmt:'express',live:false,why:'soho / hudson square. consumer + creative tech.'},
+ {id:'dumbo',name:'dumbo, brooklyn',wave:2,lat:40.7033,lng:-73.9881,fmt:'corner',live:false,why:"the borough's founder scene."},
+ {id:'kendall',name:'kendall square',wave:2,lat:42.3625,lng:-71.0843,fmt:'flagship',live:false,why:'cambridge. densest biotech cluster on earth: 60+ bio funds within 3 miles. flagship pioneering, a16z bio.'},
+ {id:'backbay',name:'back bay, boston',wave:2,lat:42.3500,lng:-71.0810,fmt:'express',live:false,why:"general catalyst's backyard."},
+ {id:'santamonica',name:'santa monica',wave:2,lat:34.0195,lng:-118.4912,fmt:'flagship',live:false,why:'silicon beach. upfront ventures.'},
+ {id:'venice',name:'venice, la',wave:2,lat:33.9890,lng:-118.4650,fmt:'express',live:false,why:'google + snap orbit, creative tech.'},
+ {id:'pasadena',name:'pasadena',wave:2,lat:34.1478,lng:-118.1445,fmt:'express',live:false,why:'caltech + jpl deep tech. your backyard, fast build.'},
+ {id:'slu',name:'south lake union',wave:2,lat:47.6250,lng:-122.3370,fmt:'flagship',live:false,why:"seattle. madrona's turf, amazon + ai talent."},
+ {id:'pioneer',name:'pioneer square',wave:2,lat:47.6015,lng:-122.3340,fmt:'corner',live:false,why:'seattle downtown startup density.'},
+ // ----- WAVE III · inland strongholds -----
+ {id:'austin',name:'east austin',wave:3,lat:30.2672,lng:-97.7340,fmt:'flagship',live:false,why:'defense-tech capital: founders fund, 8vc, palantir alumni.'},
+ {id:'lehi',name:'silicon slopes',wave:3,lat:40.4136,lng:-111.8762,fmt:'flagship',live:false,why:'lehi, ut. qualtrics, divvy. pelion, album vc. corgi office nearby.'},
+ {id:'slc',name:'salt lake city',wave:3,lat:40.7608,lng:-111.8910,fmt:'corner',live:false,why:"the slopes' urban front."},
+ {id:'boulder',name:'boulder',wave:3,lat:40.0176,lng:-105.2797,fmt:'express',live:false,why:'foundry group + the techstars birthplace.'},
+ {id:'denver',name:'rino, denver',wave:3,lat:39.7660,lng:-104.9780,fmt:'corner',live:false,why:"the front range's founder district."},
+ {id:'chicago',name:'fulton market',wave:3,lat:41.8860,lng:-87.6570,fmt:'express',live:false,why:"chicago's b2b + fintech corridor."},
+ {id:'miami',name:'brickell, miami',wave:3,lat:25.7617,lng:-80.1918,fmt:'flagship',live:false,why:'brickell / wynwood. founder influx, crypto + fintech.'},
+ // ----- WAVE IV · the frontier -----
+ {id:'atlanta',name:'tech square',wave:4,lat:33.7770,lng:-84.3890,fmt:'express',live:false,why:'atlanta. georgia tech + atlanta ventures.'},
+ {id:'durham',name:'research triangle',wave:4,lat:35.9940,lng:-78.8986,fmt:'corner',live:false,why:'durham nc. deep tech + biotech, duke/unc.'},
+ {id:'sandiego',name:'la jolla',wave:4,lat:32.8700,lng:-117.2200,fmt:'express',live:false,why:'san diego utc. biotech + qualcomm orbit.'},
+ {id:'dallas',name:'deep ellum',wave:4,lat:32.7840,lng:-96.7840,fmt:'corner',live:false,why:'dallas. enterprise + the trucking vertical.'},
+ {id:'dc',name:'arlington, dc',wave:4,lat:38.8950,lng:-77.0710,fmt:'corner',live:false,why:'rosslyn. revolution + govtech.'},
+ {id:'pittsburgh',name:'pittsburgh',wave:4,lat:40.4440,lng:-79.9530,fmt:'corner',live:false,why:'robotics + ai, carnegie mellon.'},
+ {id:'scottsdale',name:'scottsdale',wave:4,lat:33.4940,lng:-111.9260,fmt:'corner',live:false,why:"phoenix. the sun-belt's rising scene."},
+ {id:'nashville',name:'nashville',wave:4,lat:36.1620,lng:-86.7810,fmt:'corner',live:false,why:'healthtech + emerging founders.'},
+];
+let wave='all';
+const map=L.map('map',{scrollWheelZoom:false}).setView([39.5,-98.4],4);window._map=map;
+L.tileLayer('https://{s}.basemap.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  {attribution:'© OpenStreetMap © CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
+const layer=L.layerGroup().addTo(map);
+let markers={};
+function pop(c){return '<div class="pop"><div class="pn">'+c.name+'</div><span class="pf" style="background:'+C[c.fmt]+'">'+FL[c.fmt]+'</span><div class="pw">'+c.why+'</div>'+(c.live?'<div class="livetag">● secured</div>':'<button onclick="deployCity(\''+c.id+'\')">take it →</button>')+'</div>';}
+function mstyle(c){return {radius:c.live?11:7,color:c.live?'#1A1A17':C[c.fmt],weight:c.live?3:2,fillColor:c.live?'#FF6B1A':C[c.fmt],fillOpacity:c.live?1:.8};}
+function draw(){
+  layer.clearLayers();markers={};
+  const items = wave==='all'?data:data.filter(c=>c.wave===wave);
+  items.forEach(c=>{const m=L.circleMarker([c.lat,c.lng],mstyle(c));m.bindPopup(pop(c));layer.addLayer(m);markers[c.id]=m;});
+  if(items.length) map.fitBounds(items.map(c=>[c.lat,c.lng]),{padding:[45,45],maxZoom:wave==='all'?5:9});
+}
+function setWave(w){wave=w;document.querySelectorAll('.rtab').forEach(t=>t.classList.toggle('on',t.dataset.w===String(w)));draw();}
+function conquer(id){const c=data.find(x=>x.id===id);if(!c||c.live)return;c.live=true;const m=markers[id];if(m){m.setStyle(mstyle(c));m.setPopupContent(pop(c));}upd();}
+function deployCity(id){conquer(id);markers[id]&&markers[id].openPopup();}
+function upd(){const n=data.filter(c=>c.live).length;document.getElementById('liveN').textContent=n;document.getElementById('cbar').style.width=Math.round(n/data.length*100)+'%';}
+let campaigning=false;
+function runCampaign(){
+  if(campaigning)return;campaigning=true;
+  data.forEach(c=>{if(c.id!=='sf')c.live=false;});
+  setWave('all');upd();
+  const queue=data.filter(c=>!c.live).sort((a,b)=>a.wave-b.wave);
+  let i=0,cur=0;
+  (function step(){
+    if(i>=queue.length){campaigning=false;map.flyToBounds(data.map(c=>[c.lat,c.lng]),{padding:[45,45],maxZoom:5,duration:1.2});return;}
+    const c=queue[i];
+    if(c.wave!==cur){cur=c.wave;const wp=data.filter(x=>x.wave===cur).map(x=>[x.lat,x.lng]);
+      map.flyToBounds(wp,{padding:[60,60],maxZoom:8,duration:1.0});
+      setTimeout(function(){conquer(c.id);i++;setTimeout(step,300);},1150);
+    } else {conquer(c.id);i++;setTimeout(step,300);}
+  })();
+}
+draw();upd();
+const roll=[['mo 1',6],['mo 2',18],['mo 3',38],['mo 4',60],['mo 5',82],['mo 6',100]];
+const rr=document.getElementById('roll2');roll.forEach(x=>{const e=document.createElement('div');e.className='mo';
+e.innerHTML='<div class="m">'+x[0]+'</div><div class="cum">'+x[1]+'</div><div class="gbar"><i style="height:'+x[1]+'%"></i></div>';rr.appendChild(e);});
+
+// ---------- city voting ----------
+const voteData=[
+ {city:'austin',v:472},{city:'new york',v:451},{city:'los angeles',v:415},
+ {city:'miami',v:388},{city:'seattle',v:263},{city:'boston',v:240},
+ {city:'chicago',v:198},{city:'denver',v:176},{city:'nashville',v:142},{city:'toronto',v:121},
+];
+const GOAL=500;
+function renderVotes(){
+  const sel=document.getElementById('vCity');
+  if(sel&&!sel.dataset.init){sel.innerHTML=voteData.map(c=>'<option>'+c.city+'</option>').join('')+'<option value="__new">+ another city…</option>';sel.dataset.init='1';}
+  const list=document.getElementById('voteList');if(!list)return;
+  list.innerHTML=voteData.slice().sort((a,b)=>b.v-a.v).map(c=>{
+    const pct=Math.min(100,Math.round(c.v/GOAL*100)),un=c.v>=GOAL;
+    return '<div class="vcity'+(un?' unlocked':'')+'"><div class="vh"><span class="vn">'+c.city+(un?' 🎉':'')+'</span><span class="vc">'+c.v+' / '+GOAL+(un?' · unlocked':'')+'</span></div><div class="vbar"><i style="width:'+pct+'%"></i></div></div>';
+  }).join('');
+}
+function castVote(){
+  const em=(document.getElementById('vEmail').value||'').trim();
+  let city=document.getElementById('vCity').value;
+  const msg=document.getElementById('vMsg');
+  if(!/.+@.+\..+/.test(em)){msg.style.color='#c0392b';msg.textContent='enter a valid email to vote.';return;}
+  if(city==='__new'){const nc=prompt('which city?');if(!nc)return;city=nc.toLowerCase().trim();
+    if(!voteData.find(c=>c.city===city)){voteData.push({city,v:0});const s=document.getElementById('vCity');s.insertBefore(new Option(city,city),s.lastChild);}}
+  const c=voteData.find(x=>x.city===city);c.v++;
+  document.getElementById('vEmail').value='';
+  renderVotes();
+  if(c.v>=GOAL){msg.style.color='#15A88A';msg.textContent='🎉 '+city+' hit 500, the launch pod is deploying!';}
+  else{msg.style.color='#1A1A17';msg.textContent='vote #'+c.v+' for '+city+' counted, you\'re on the corgi list.';}
+}
+renderVotes();
+
+// ---------- SOP interactive checklist ----------
+document.querySelectorAll('#view-sop .chk').forEach(function(el){
+  el.addEventListener('click',function(){el.querySelector('.b').classList.toggle('done');sopProg();});
+});
+function sopProg(){
+  var all=document.querySelectorAll('#view-sop .chk');
+  var done=document.querySelectorAll('#view-sop .chk .b.done').length;
+  var bar=document.getElementById('sopbar');
+  if(bar){bar.style.width=Math.max(3,Math.round(done/all.length*100))+'%';
+    document.getElementById('sopct').textContent=done?(done+' of '+all.length+' steps done'):'tap a step to check it off';}
+}
+sopProg();
+</script>
+</body>
+</html>
