@@ -143,6 +143,10 @@
   .pop .prow b{font-family:"Geist";font-weight:700;color:#1A1A17;display:block;font-size:9px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:1px}
   .leaflet-tooltip.c-tip{background:rgba(18,18,16,.82);color:#fff;border:none;border-radius:5px;font-family:"Geist";font-weight:700;font-size:10px;letter-spacing:.3px;text-transform:none;padding:2px 6px;box-shadow:0 1px 5px rgba(0,0,0,.45)}
   .leaflet-tooltip.c-tip:before{display:none}
+  .cmark{transform-box:fill-box;transform-origin:center}
+  @keyframes popIn2{0%{transform:scale(0);opacity:0}70%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
+  .radar{display:block;width:14px;height:14px;border-radius:50%;border:2px solid #FF6B1A;opacity:0;animation:radar 2.3s ease-out infinite}
+  @keyframes radar{0%{transform:scale(.35);opacity:.6}100%{transform:scale(3.6);opacity:0}}
   .pop button{font-family:"Geist";font-weight:700;font-size:12px;border:none;border-radius:8px;padding:7px 12px;background:var(--ink);color:#fff;cursor:pointer;width:100%}
   .pop .livetag{font-family:"Geist";font-weight:700;font-size:12px;color:var(--corner)}
   @media(max-width:620px){.roll{grid-template-columns:repeat(3,1fr)}#map{height:430px}.pb h1{font-size:32px}}
@@ -353,11 +357,11 @@
       <h2 class="k" style="margin-top:22px">the vibe layer, corgi sounds</h2>
       <p style="font-size:13.5px;color:var(--muted);margin:0 0 8px">a café's vibe is sound + people. a curated <b style="color:var(--ink)">daypart soundtrack</b> ("corgi sounds") moves the energy through the 24-hour cycle, quiet focus at dawn, social buzz at golden hour, ship-it beats overnight. one playlist spec, every location, so a corgi café <i>feels</i> like one anywhere.</p>
       <div class="sounds">
-        <div class="day"><div class="hr">6–10a</div><div class="mood"><div class="mt">deep focus</div><div class="md">ambient · lo-fi · instrumental, low volume</div></div><div class="bpm">60–85 bpm</div></div>
-        <div class="day"><div class="hr">10a–2p</div><div class="mood"><div class="mt">build mode</div><div class="md">upbeat indie / electronic, energizing not distracting</div></div><div class="bpm">90–115 bpm</div></div>
-        <div class="day"><div class="hr">2–6p</div><div class="mood"><div class="mt">collab</div><div class="md">warm, groovy, social, conversation-friendly</div></div><div class="bpm">100–120 bpm</div></div>
-        <div class="day"><div class="hr">6–10p</div><div class="mood"><div class="mt">golden hour</div><div class="md">soulful / jazzy / house, higher energy</div></div><div class="bpm">115–125 bpm</div></div>
-        <div class="day"><div class="hr">10p–6a</div><div class="mood"><div class="mt">ship-it</div><div class="md">downtempo focus beats for the all-nighters</div></div><div class="bpm">70–100 bpm</div></div>
+        <div class="day"><div class="hr">6–10a</div><div class="mood"><div class="mt">deep focus</div><div class="md">ambient · lo-fi · instrumental. <b style="color:var(--ink)">nils frahm · jon hopkins · tycho · hammock · idealism</b></div></div><div class="bpm">60–85 bpm</div></div>
+        <div class="day"><div class="hr">10a–2p</div><div class="mood"><div class="mt">build mode</div><div class="md">upbeat indie / electronic. <b style="color:var(--ink)">odesza · bonobo · jungle · khruangbin · toro y moi</b></div></div><div class="bpm">90–115 bpm</div></div>
+        <div class="day"><div class="hr">2–6p</div><div class="mood"><div class="mt">collab</div><div class="md">warm, groovy, social. <b style="color:var(--ink)">men i trust · parcels · l'impératrice · mild high club</b></div></div><div class="bpm">100–120 bpm</div></div>
+        <div class="day"><div class="hr">6–10p</div><div class="mood"><div class="mt">golden hour</div><div class="md">soulful / jazzy / house. <b style="color:var(--ink)">kaytranada · fkj · tom misch · anderson .paak · disclosure</b></div></div><div class="bpm">115–125 bpm</div></div>
+        <div class="day"><div class="hr">10p–6a</div><div class="mood"><div class="mt">ship-it</div><div class="md">downtempo focus beats. <b style="color:var(--ink)">four tet · boards of canada · emancipator · rüfüs du sol</b></div></div><div class="bpm">70–100 bpm</div></div>
       </div>
       <div class="note2" style="border-left-color:var(--corner);background:#EAF7F1"><b>curate the room, not just the sound:</b> seed every opening with high-status local founders (the rap-genius move), run founder office-hours + partner nights, and let the community lead keep the right people coming back. the vibe is who's in the room as much as what's playing.</div>
 
@@ -413,7 +417,7 @@ function show(v){
   document.getElementById('view-'+v).style.display='block';
   document.querySelectorAll('.navtab').forEach(t=>t.classList.toggle('on',t.dataset.v===v));
   document.getElementById('mapfoot').style.display=v==='map'?'block':'none';
-  if(v==='map'&&window._map){setTimeout(()=>window._map.invalidateSize(),60);}
+  if(v==='map'&&window._map){setTimeout(function(){window._map.invalidateSize();draw();},60);}
   if(v==='playbook'){var ln=document.querySelector('.knot .cut');if(ln){ln.style.animation='none';void ln.offsetWidth;ln.style.animation='';}}
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -465,9 +469,11 @@ const map=L.map('map',{scrollWheelZoom:false}).setView([39.5,-98.4],4);window._m
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
   {attribution:'Tiles © Esri',maxZoom:16}).addTo(map);
 const lines=L.layerGroup().addTo(map);
+const pulseLayer=L.layerGroup().addTo(map);
 const layer=L.layerGroup().addTo(map);
 const HQ=[37.7905,-122.4047];
 let markers={};
+function addPulse(c){L.marker([c.lat,c.lng],{icon:L.divIcon({className:'',html:'<span class="radar"></span>',iconSize:[14,14],iconAnchor:[7,7]}),interactive:false,keyboard:false}).addTo(pulseLayer);}
 function pop(c){
   var h='<div class="pop"><div class="pn">'+c.name+'</div><span class="pf" style="background:'+C[c.fmt]+'">'+FL[c.fmt]+'</span>';
   if(c.s) h+='<div class="prow"><b>startups here</b>'+c.s+'</div>';
@@ -478,21 +484,24 @@ function pop(c){
 }
 function mstyle(c){return {radius:c.live?10:6,color:c.live?'#FFFFFF':C[c.fmt],weight:c.live?2.5:1.5,fillColor:c.live?'#FF6B1A':C[c.fmt],fillOpacity:c.live?1:.95};}
 function draw(){
-  layer.clearLayers();markers={};
+  layer.clearLayers();pulseLayer.clearLayers();markers={};
   const items = wave==='all'?data:data.filter(c=>c.wave===wave);
-  items.forEach(c=>{
+  items.forEach(function(c,i){
     const m=L.circleMarker([c.lat,c.lng],mstyle(c));
     m.bindPopup(pop(c));
     const lb=LBL[c.id]||[c.name,1];
     if(wave!=='all'||lb[1]) m.bindTooltip(lb[0],{permanent:true,className:'c-tip',direction:'right',offset:[7,0]});
     layer.addLayer(m);markers[c.id]=m;
+    if(m._path){m._path.classList.add('cmark');m._path.style.animation='popIn2 .5s ease both';m._path.style.animationDelay=(i*0.022)+'s';}
+    if(c.live) addPulse(c);
   });
   if(items.length) map.fitBounds(items.map(c=>[c.lat,c.lng]),{padding:[45,45],maxZoom:wave==='all'?5:9});
 }
 function setWave(w){wave=w;lines.clearLayers();document.querySelectorAll('.rtab').forEach(t=>t.classList.toggle('on',t.dataset.w===String(w)));draw();}
 function conquer(id){
   const c=data.find(x=>x.id===id);if(!c||c.live)return;c.live=true;
-  const m=markers[id];if(m){m.setStyle(mstyle(c));m.setPopupContent(pop(c));}
+  const m=markers[id];if(m){m.setStyle(mstyle(c));m.setPopupContent(pop(c));if(m._path){m._path.style.animation='popIn2 .4s ease both';}}
+  addPulse(c);
   if(wave==='all'&&id!=='sf'){L.polyline([HQ,[c.lat,c.lng]],{color:'#FF6B1A',weight:1.2,opacity:.4,dashArray:'3 5'}).addTo(lines);}
   upd();
 }
