@@ -432,7 +432,7 @@ let data=[
 ];
 let wave='all';
 const map=L.map('map',{scrollWheelZoom:false}).setView([39.5,-98.4],4);window._map=map;
-L.tileLayer('https://{s}.basemap.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+L.tileLayer('https://{s}.basemap.cartocdn.com/light_all/{z}/{x}/{y}.png',
   {attribution:'© OpenStreetMap © CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
 const layer=L.layerGroup().addTo(map);
 let markers={};
