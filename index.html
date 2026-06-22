@@ -27,8 +27,8 @@
   .hero{max-width:1000px;margin:0 auto;padding:20px 18px 6px}
   .tag{display:inline-block;background:var(--neon);color:var(--ink);font-family:"Montserrat";font-weight:700;font-size:10.5px;letter-spacing:.6px;padding:4px 9px;border-radius:999px;margin-bottom:10px}
   .hero h1{font-size:26px;font-weight:800;letter-spacing:-.5px;margin:0 0 8px;line-height:1.06}
-  .lloyd{background:var(--ink);color:#fff;border-radius:13px;padding:12px 15px;font-size:13px;line-height:1.5;max-width:730px}
-  .lloyd b{font-family:"Montserrat";color:var(--neon)}
+  .intro{background:var(--ink);color:#fff;border-radius:13px;padding:12px 15px;font-size:13px;line-height:1.5;max-width:730px}
+  .intro b{font-family:"Montserrat";color:var(--neon)}
   .regiontabs{max-width:1000px;margin:14px auto 0;padding:0 18px;display:flex;gap:8px;flex-wrap:wrap}
   .rtab{font-family:"Montserrat";font-weight:700;font-size:12.5px;padding:8px 15px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
   .rtab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -134,6 +134,10 @@
   .pop .pn{font-family:"Montserrat";font-weight:800;font-size:15px}
   .pop .pf{font-family:"Montserrat";font-weight:700;font-size:9.5px;letter-spacing:.4px;text-transform:uppercase;color:#fff;padding:2px 7px;border-radius:5px;display:inline-block;margin:4px 0 6px}
   .pop .pw{font-size:12.5px;color:#444;margin-bottom:8px}
+  .pop .prow{font-size:12.5px;color:#333;margin:6px 0;line-height:1.4}
+  .pop .prow b{font-family:"Montserrat";font-weight:700;color:#1A1A17;display:block;font-size:9px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:1px}
+  .leaflet-tooltip.c-tip{background:rgba(18,18,16,.82);color:#fff;border:none;border-radius:5px;font-family:"Montserrat";font-weight:700;font-size:10px;letter-spacing:.3px;text-transform:none;padding:2px 6px;box-shadow:0 1px 5px rgba(0,0,0,.45)}
+  .leaflet-tooltip.c-tip:before{display:none}
   .pop button{font-family:"Montserrat";font-weight:700;font-size:12px;border:none;border-radius:8px;padding:7px 12px;background:var(--ink);color:#fff;cursor:pointer;width:100%}
   .pop .livetag{font-family:"Montserrat";font-weight:700;font-size:12px;color:var(--corner)}
   @media(max-width:620px){.roll{grid-template-columns:repeat(3,1fr)}#map{height:430px}.pb h1{font-size:32px}}
@@ -155,7 +159,7 @@
     <div class="hero">
       <span class="tag">the campaign map · concept by drew nagda</span>
       <h1>start at HQ, then take the country cluster by cluster.</h1>
-      <div class="lloyd"><b>every dot is a real vc cluster</b>, the actual blocks where founders and the capital that funds them sit. we don't open in "cities," we take territory: secure the bay, then the coasts, then inland, then the frontier. press play and watch it run.</div>
+      <div class="intro"><b>the concept is proven at 9 claude lane.</b> now founders across the country are asking corgi to come to them. every dot is a real vc cluster, the blocks where founders and capital already sit. we don't chase "cities," we take territory: the bay, then the coasts, then inland, then the frontier.</div>
       <div class="herobtns">
         <button class="runbtn" onclick="runCampaign()">▶ run the campaign</button>
         <button class="votecta" onclick="show('vote')">📍 vote your city in →</button>
@@ -255,10 +259,10 @@
 
     <div class="chapter">
       <span class="num">v · why a café</span>
-      <h2>this is how insurance actually started</h2>
-      <p>in 1688, lloyd's coffee house became lloyd's of london. not because anyone decided a café should sell insurance, but because the people making risky bets already gathered there to share information and price risk.</p>
-      <p>corgi café runs the same play. <b>insurance works best close to the people taking the risk.</b> founders today, then the truckers and small-business owners corgi serves next, including the latino small-business market i reach directly.</p>
-      <div class="pull">lloyd's served shipowners. corgi's serves founders, then every vertical after.</div>
+      <h2>get close to the people taking the risk</h2>
+      <p><b>insurance works best when it sits close to the people taking the risk</b>, in the places they already gather to compare notes and size each other up. corgi café is that place, built for the modern founder.</p>
+      <p>it builds familiarity before anyone needs a policy, and turns corgi from a website into a room full of real people. founders today, then the truckers and small-business owners corgi serves next, including the latino small-business market drew reaches directly.</p>
+      <div class="pull">be where the risk-takers gather. founders first, then every vertical after.</div>
     </div>
 
     <div class="cta">
@@ -391,68 +395,90 @@ function show(v){
 }
 const C={flagship:'#D2541F',express:'#3A86E8',corner:'#15A88A'};
 const FL={flagship:'flagship 24/7',express:'express counter',corner:'corgi corner'};
+// [shortLabel, showAtNationalView]
+const LBL={sf:['SF',1],soma:['soma',0],jackson:['jackson sq',0],sandhill:['sand hill rd',0],paloalto:['palo alto',0],mtnview:['mtn view',0],oakland:['oakland',0],nyflat:['NYC',1],nysoho:['soho',0],dumbo:['dumbo',0],kendall:['BOSTON',1],backbay:['back bay',0],santamonica:['LA',1],venice:['venice',0],pasadena:['pasadena',0],slu:['SEATTLE',1],pioneer:['pioneer sq',0],austin:['AUSTIN',1],lehi:['SLC',1],slc:['salt lake',0],boulder:['BOULDER',1],denver:['denver',0],chicago:['CHICAGO',1],miami:['MIAMI',1],atlanta:['ATLANTA',1],durham:['RALEIGH',1],sandiego:['SAN DIEGO',1],dallas:['DALLAS',1],dc:['DC',1],pittsburgh:['PITTSBURGH',1],scottsdale:['PHOENIX',1],nashville:['NASHVILLE',1]};
 // region: which views a pin appears in
 let data=[
  // ----- WAVE I · the home front (bay area) -----
- {id:'sf',name:'san francisco',wave:1,lat:37.7905,lng:-122.4047,fmt:'flagship',live:true,why:'HQ · 9 claude lane. the beachhead. open 24/7 + profitable.'},
- {id:'soma',name:'soma / south park',wave:1,lat:37.7785,lng:-122.3970,fmt:'express',live:false,why:'the original yc + seed-fund orbit, densest founder block in the city.'},
- {id:'jackson',name:'jackson square',wave:1,lat:37.7965,lng:-122.4036,fmt:'corner',live:false,why:"fidi's vc row, where many funds now sit."},
- {id:'sandhill',name:'sand hill road',wave:1,lat:37.4221,lng:-122.2030,fmt:'flagship',live:false,why:'menlo park. the densest vc cluster on earth: sequoia, a16z, kleiner, greylock, lightspeed. 60+ series a funds within 5 miles.'},
- {id:'paloalto',name:'palo alto',wave:1,lat:37.4440,lng:-122.1610,fmt:'express',live:false,why:'university ave, stanford-adjacent. accel, felicis.'},
- {id:'mtnview',name:'mountain view',wave:1,lat:37.3939,lng:-122.0790,fmt:'corner',live:false,why:'castro st, googleplex orbit.'},
- {id:'oakland',name:'oakland',wave:1,lat:37.8044,lng:-122.2712,fmt:'express',live:false,why:'uptown / jack london. cheaper bay, fast-rising founders.'},
+ {id:'sf',name:'san francisco',wave:1,lat:37.7905,lng:-122.4047,fmt:'flagship',live:true,s:'openai, anthropic, databricks',v:'founders fund, ggv',why:'HQ · 9 claude lane. the beachhead, proven and profitable.'},
+ {id:'soma',name:'soma / south park',wave:1,lat:37.7785,lng:-122.3970,fmt:'express',live:false,s:'instacart, dropbox, pinterest',v:'south park seed funds',why:'the original yc + seed-fund orbit.'},
+ {id:'jackson',name:'jackson square',wave:1,lat:37.7965,lng:-122.4036,fmt:'corner',live:false,s:'',v:'many funds now cluster here',why:"fidi's vc row."},
+ {id:'sandhill',name:'sand hill road',wave:1,lat:37.4221,lng:-122.2030,fmt:'flagship',live:false,s:'',v:'sequoia, a16z, kleiner, greylock, lightspeed',why:'menlo park. densest vc cluster on earth, 60+ series a funds in 5 miles.'},
+ {id:'paloalto',name:'palo alto',wave:1,lat:37.4440,lng:-122.1610,fmt:'express',live:false,s:'palantir, hp',v:'accel, felicis',why:'university ave, stanford-adjacent.'},
+ {id:'mtnview',name:'mountain view',wave:1,lat:37.3939,lng:-122.0790,fmt:'corner',live:false,s:'google, intuit',v:'',why:'castro st, googleplex orbit.'},
+ {id:'oakland',name:'oakland',wave:1,lat:37.8044,lng:-122.2712,fmt:'express',live:false,s:'',v:'kapor capital',why:'cheaper bay, fast-rising founders.'},
  // ----- WAVE II · the coasts -----
- {id:'nyflat',name:'flatiron, nyc',wave:2,lat:40.7400,lng:-73.9903,fmt:'flagship',live:false,why:"union square / flatiron. usv's home turf. 2nd-largest vc market on earth."},
- {id:'nysoho',name:'soho, nyc',wave:2,lat:40.7250,lng:-74.0030,fmt:'express',live:false,why:'soho / hudson square. consumer + creative tech.'},
- {id:'dumbo',name:'dumbo, brooklyn',wave:2,lat:40.7033,lng:-73.9881,fmt:'corner',live:false,why:"the borough's founder scene."},
- {id:'kendall',name:'kendall square',wave:2,lat:42.3625,lng:-71.0843,fmt:'flagship',live:false,why:'cambridge. densest biotech cluster on earth: 60+ bio funds within 3 miles. flagship pioneering, a16z bio.'},
- {id:'backbay',name:'back bay, boston',wave:2,lat:42.3500,lng:-71.0810,fmt:'express',live:false,why:"general catalyst's backyard."},
- {id:'santamonica',name:'santa monica',wave:2,lat:34.0195,lng:-118.4912,fmt:'flagship',live:false,why:'silicon beach. upfront ventures.'},
- {id:'venice',name:'venice, la',wave:2,lat:33.9890,lng:-118.4650,fmt:'express',live:false,why:'google + snap orbit, creative tech.'},
- {id:'pasadena',name:'pasadena',wave:2,lat:34.1478,lng:-118.1445,fmt:'express',live:false,why:'caltech + jpl deep tech. your backyard, fast build.'},
- {id:'slu',name:'south lake union',wave:2,lat:47.6250,lng:-122.3370,fmt:'flagship',live:false,why:"seattle. madrona's turf, amazon + ai talent."},
- {id:'pioneer',name:'pioneer square',wave:2,lat:47.6015,lng:-122.3340,fmt:'corner',live:false,why:'seattle downtown startup density.'},
+ {id:'nyflat',name:'flatiron, nyc',wave:2,lat:40.7400,lng:-73.9903,fmt:'flagship',live:false,s:'datadog, betterment',v:'usv, lerer hippeau',why:'2nd-largest vc market on earth.'},
+ {id:'nysoho',name:'soho, nyc',wave:2,lat:40.7250,lng:-74.0030,fmt:'express',live:false,s:'',v:'consumer + creative funds',why:'soho / hudson square.'},
+ {id:'dumbo',name:'dumbo, brooklyn',wave:2,lat:40.7033,lng:-73.9881,fmt:'corner',live:false,s:'etsy',v:'brooklyn bridge ventures',why:"the borough's founder scene."},
+ {id:'kendall',name:'kendall square',wave:2,lat:42.3625,lng:-71.0843,fmt:'flagship',live:false,s:'moderna, ginkgo, hubspot',v:'flagship pioneering, a16z bio, polaris',why:'cambridge. densest biotech cluster on earth.'},
+ {id:'backbay',name:'back bay, boston',wave:2,lat:42.3500,lng:-71.0810,fmt:'express',live:false,s:'',v:'general catalyst, battery',why:"boston's vc spine."},
+ {id:'santamonica',name:'santa monica',wave:2,lat:34.0195,lng:-118.4912,fmt:'flagship',live:false,s:'goodrx',v:'upfront ventures',why:'silicon beach.'},
+ {id:'venice',name:'venice, la',wave:2,lat:33.9890,lng:-118.4650,fmt:'express',live:false,s:'google, snap',v:'',why:'creative + consumer tech.'},
+ {id:'pasadena',name:'pasadena',wave:2,lat:34.1478,lng:-118.1445,fmt:'express',live:false,s:'caltech + jpl spinouts',v:'',why:"deep tech. drew's backyard, fast build."},
+ {id:'slu',name:'south lake union',wave:2,lat:47.6250,lng:-122.3370,fmt:'flagship',live:false,s:'amazon',v:'madrona',why:'seattle. amazon + ai talent.'},
+ {id:'pioneer',name:'pioneer square',wave:2,lat:47.6015,lng:-122.3340,fmt:'corner',live:false,s:'',v:'',why:'seattle downtown density.'},
  // ----- WAVE III · inland strongholds -----
- {id:'austin',name:'east austin',wave:3,lat:30.2672,lng:-97.7340,fmt:'flagship',live:false,why:'defense-tech capital: founders fund, 8vc, palantir alumni.'},
- {id:'lehi',name:'silicon slopes',wave:3,lat:40.4136,lng:-111.8762,fmt:'flagship',live:false,why:'lehi, ut. qualtrics, divvy. pelion, album vc. corgi office nearby.'},
- {id:'slc',name:'salt lake city',wave:3,lat:40.7608,lng:-111.8910,fmt:'corner',live:false,why:"the slopes' urban front."},
- {id:'boulder',name:'boulder',wave:3,lat:40.0176,lng:-105.2797,fmt:'express',live:false,why:'foundry group + the techstars birthplace.'},
- {id:'denver',name:'rino, denver',wave:3,lat:39.7660,lng:-104.9780,fmt:'corner',live:false,why:"the front range's founder district."},
- {id:'chicago',name:'fulton market',wave:3,lat:41.8860,lng:-87.6570,fmt:'express',live:false,why:"chicago's b2b + fintech corridor."},
- {id:'miami',name:'brickell, miami',wave:3,lat:25.7617,lng:-80.1918,fmt:'flagship',live:false,why:'brickell / wynwood. founder influx, crypto + fintech.'},
+ {id:'austin',name:'east austin',wave:3,lat:30.2672,lng:-97.7340,fmt:'flagship',live:false,s:'tesla, oracle, palantir alumni',v:'founders fund, 8vc',why:'defense-tech capital.'},
+ {id:'lehi',name:'silicon slopes',wave:3,lat:40.4136,lng:-111.8762,fmt:'flagship',live:false,s:'qualtrics, divvy, pluralsight',v:'pelion, album vc',why:'lehi, ut. corgi office nearby.'},
+ {id:'slc',name:'salt lake city',wave:3,lat:40.7608,lng:-111.8910,fmt:'corner',live:false,s:'',v:'',why:"the slopes' urban front."},
+ {id:'boulder',name:'boulder',wave:3,lat:40.0176,lng:-105.2797,fmt:'express',live:false,s:'',v:'foundry group, techstars',why:'the techstars birthplace.'},
+ {id:'denver',name:'rino, denver',wave:3,lat:39.7660,lng:-104.9780,fmt:'corner',live:false,s:'',v:'',why:'front range founder district.'},
+ {id:'chicago',name:'fulton market',wave:3,lat:41.8860,lng:-87.6570,fmt:'express',live:false,s:'',v:'',why:"chicago's b2b + fintech corridor."},
+ {id:'miami',name:'brickell, miami',wave:3,lat:25.7617,lng:-80.1918,fmt:'flagship',live:false,s:'',v:'',why:'founder influx, crypto + fintech.'},
  // ----- WAVE IV · the frontier -----
- {id:'atlanta',name:'tech square',wave:4,lat:33.7770,lng:-84.3890,fmt:'express',live:false,why:'atlanta. georgia tech + atlanta ventures.'},
- {id:'durham',name:'research triangle',wave:4,lat:35.9940,lng:-78.8986,fmt:'corner',live:false,why:'durham nc. deep tech + biotech, duke/unc.'},
- {id:'sandiego',name:'la jolla',wave:4,lat:32.8700,lng:-117.2200,fmt:'express',live:false,why:'san diego utc. biotech + qualcomm orbit.'},
- {id:'dallas',name:'deep ellum',wave:4,lat:32.7840,lng:-96.7840,fmt:'corner',live:false,why:'dallas. enterprise + the trucking vertical.'},
- {id:'dc',name:'arlington, dc',wave:4,lat:38.8950,lng:-77.0710,fmt:'corner',live:false,why:'rosslyn. revolution + govtech.'},
- {id:'pittsburgh',name:'pittsburgh',wave:4,lat:40.4440,lng:-79.9530,fmt:'corner',live:false,why:'robotics + ai, carnegie mellon.'},
- {id:'scottsdale',name:'scottsdale',wave:4,lat:33.4940,lng:-111.9260,fmt:'corner',live:false,why:"phoenix. the sun-belt's rising scene."},
- {id:'nashville',name:'nashville',wave:4,lat:36.1620,lng:-86.7810,fmt:'corner',live:false,why:'healthtech + emerging founders.'},
+ {id:'atlanta',name:'tech square',wave:4,lat:33.7770,lng:-84.3890,fmt:'express',live:false,s:'mailchimp, calendly',v:'atlanta ventures',why:'georgia tech ecosystem.'},
+ {id:'durham',name:'research triangle',wave:4,lat:35.9940,lng:-78.8986,fmt:'corner',live:false,s:'',v:'',why:'deep tech + biotech, duke/unc.'},
+ {id:'sandiego',name:'la jolla',wave:4,lat:32.8700,lng:-117.2200,fmt:'express',live:false,s:'qualcomm',v:'',why:'biotech + wireless, san diego.'},
+ {id:'dallas',name:'deep ellum',wave:4,lat:32.7840,lng:-96.7840,fmt:'corner',live:false,s:'',v:'',why:'enterprise + the trucking vertical.'},
+ {id:'dc',name:'arlington, dc',wave:4,lat:38.8950,lng:-77.0710,fmt:'corner',live:false,s:'',v:'revolution',why:'govtech + revolution.'},
+ {id:'pittsburgh',name:'pittsburgh',wave:4,lat:40.4440,lng:-79.9530,fmt:'corner',live:false,s:'',v:'',why:'robotics + ai, carnegie mellon.'},
+ {id:'scottsdale',name:'scottsdale',wave:4,lat:33.4940,lng:-111.9260,fmt:'corner',live:false,s:'',v:'',why:'sun-belt rising scene.'},
+ {id:'nashville',name:'nashville',wave:4,lat:36.1620,lng:-86.7810,fmt:'corner',live:false,s:'',v:'',why:'healthtech hub.'},
 ];
 let wave='all';
 const map=L.map('map',{scrollWheelZoom:false}).setView([39.5,-98.4],4);window._map=map;
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
   {attribution:'Tiles © Esri',maxZoom:16}).addTo(map);
+const lines=L.layerGroup().addTo(map);
 const layer=L.layerGroup().addTo(map);
+const HQ=[37.7905,-122.4047];
 let markers={};
-function pop(c){return '<div class="pop"><div class="pn">'+c.name+'</div><span class="pf" style="background:'+C[c.fmt]+'">'+FL[c.fmt]+'</span><div class="pw">'+c.why+'</div>'+(c.live?'<div class="livetag">● secured</div>':'<button onclick="deployCity(\''+c.id+'\')">take it →</button>')+'</div>';}
-function mstyle(c){return {radius:c.live?11:7,color:c.live?'#1A1A17':C[c.fmt],weight:c.live?3:2,fillColor:c.live?'#FF6B1A':C[c.fmt],fillOpacity:c.live?1:.8};}
+function pop(c){
+  var h='<div class="pop"><div class="pn">'+c.name+'</div><span class="pf" style="background:'+C[c.fmt]+'">'+FL[c.fmt]+'</span>';
+  if(c.s) h+='<div class="prow"><b>startups here</b>'+c.s+'</div>';
+  if(c.v) h+='<div class="prow"><b>vc offices</b>'+c.v+'</div>';
+  h+='<div class="prow"><b>why here</b>'+c.why+'</div>';
+  h+=(c.live?'<div class="livetag">● secured</div>':'<button onclick="deployCity(\''+c.id+'\')">take it →</button>')+'</div>';
+  return h;
+}
+function mstyle(c){return {radius:c.live?10:6,color:c.live?'#FFFFFF':C[c.fmt],weight:c.live?2.5:1.5,fillColor:c.live?'#FF6B1A':C[c.fmt],fillOpacity:c.live?1:.95};}
 function draw(){
   layer.clearLayers();markers={};
   const items = wave==='all'?data:data.filter(c=>c.wave===wave);
-  items.forEach(c=>{const m=L.circleMarker([c.lat,c.lng],mstyle(c));m.bindPopup(pop(c));layer.addLayer(m);markers[c.id]=m;});
+  items.forEach(c=>{
+    const m=L.circleMarker([c.lat,c.lng],mstyle(c));
+    m.bindPopup(pop(c));
+    const lb=LBL[c.id]||[c.name,1];
+    if(wave!=='all'||lb[1]) m.bindTooltip(lb[0],{permanent:true,className:'c-tip',direction:'right',offset:[7,0]});
+    layer.addLayer(m);markers[c.id]=m;
+  });
   if(items.length) map.fitBounds(items.map(c=>[c.lat,c.lng]),{padding:[45,45],maxZoom:wave==='all'?5:9});
 }
-function setWave(w){wave=w;document.querySelectorAll('.rtab').forEach(t=>t.classList.toggle('on',t.dataset.w===String(w)));draw();}
-function conquer(id){const c=data.find(x=>x.id===id);if(!c||c.live)return;c.live=true;const m=markers[id];if(m){m.setStyle(mstyle(c));m.setPopupContent(pop(c));}upd();}
+function setWave(w){wave=w;lines.clearLayers();document.querySelectorAll('.rtab').forEach(t=>t.classList.toggle('on',t.dataset.w===String(w)));draw();}
+function conquer(id){
+  const c=data.find(x=>x.id===id);if(!c||c.live)return;c.live=true;
+  const m=markers[id];if(m){m.setStyle(mstyle(c));m.setPopupContent(pop(c));}
+  if(wave==='all'&&id!=='sf'){L.polyline([HQ,[c.lat,c.lng]],{color:'#FF6B1A',weight:1.2,opacity:.4,dashArray:'3 5'}).addTo(lines);}
+  upd();
+}
 function deployCity(id){conquer(id);markers[id]&&markers[id].openPopup();}
 function upd(){const n=data.filter(c=>c.live).length;document.getElementById('liveN').textContent=n;document.getElementById('cbar').style.width=Math.round(n/data.length*100)+'%';}
 let campaigning=false;
 function runCampaign(){
   if(campaigning)return;campaigning=true;
   data.forEach(c=>{if(c.id!=='sf')c.live=false;});
-  setWave('all');upd();
+  lines.clearLayers();setWave('all');upd();
   const queue=data.filter(c=>!c.live).sort((a,b)=>a.wave-b.wave);
   let i=0,cur=0;
   (function step(){
