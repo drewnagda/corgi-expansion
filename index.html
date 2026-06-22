@@ -432,8 +432,8 @@ let data=[
 ];
 let wave='all';
 const map=L.map('map',{scrollWheelZoom:false}).setView([39.5,-98.4],4);window._map=map;
-L.tileLayer('https://{s}.basemap.cartocdn.com/light_all/{z}/{x}/{y}.png',
-  {attribution:'© OpenStreetMap © CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+  {attribution:'Tiles © Esri',maxZoom:16}).addTo(map);
 const layer=L.layerGroup().addTo(map);
 let markers={};
 function pop(c){return '<div class="pop"><div class="pn">'+c.name+'</div><span class="pf" style="background:'+C[c.fmt]+'">'+FL[c.fmt]+'</span><div class="pw">'+c.why+'</div>'+(c.live?'<div class="livetag">● secured</div>':'<button onclick="deployCity(\''+c.id+'\')">take it →</button>')+'</div>';}
