@@ -112,6 +112,18 @@
   .voteform input{flex:1;min-width:150px}
   .voteform button{font-family:"Geist";font-weight:700;font-size:13px;padding:10px 18px;border:none;border-radius:9px;background:var(--neon);color:var(--ink);cursor:pointer}
   .vmsg{font-size:13px;font-family:"Geist";font-weight:600;margin:2px;min-height:18px}
+  .stamps{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0 8px}
+  .stamp{width:52px;height:52px;border-radius:50%;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-family:"Geist";font-weight:800;font-size:11px;color:var(--muted);cursor:pointer;transition:transform .18s,background .18s,color .18s,border-color .18s;user-select:none;text-align:center;line-height:1.05}
+  .stamp:hover{transform:translateY(-2px)}
+  .stamp.got{border:2px solid var(--neon);background:var(--neon);color:var(--ink);transform:rotate(-7deg) scale(1.04)}
+  .stampct{font-family:"Geist";font-weight:700;font-size:13px;color:var(--muted);margin:2px 0 4px}
+  .stampct b{color:var(--neon)}
+  .ideagrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:8px 0}
+  .ideacard{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:14px 15px}
+  .ideacard .ic{font-family:"Geist";font-weight:800;font-size:14.5px;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+  .ideacard .id{font-size:12.8px;color:var(--muted);line-height:1.5}
+  .ideacard .ip{display:inline-block;margin-top:8px;font-family:"Geist";font-weight:700;font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--neon);background:var(--ink);padding:2px 8px;border-radius:999px}
+  @media(max-width:620px){.ideagrid{grid-template-columns:1fr}}
   .vcity{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin:0 0 9px}
   .vcity.unlocked{border-color:var(--neon);box-shadow:0 0 0 2px rgba(255,107,26,.35)}
   .vcity .vh{display:flex;justify-content:space-between;align-items:baseline}
@@ -159,6 +171,7 @@
       <button class="navtab" data-v="playbook" onclick="show('playbook')">playbook</button>
       <button class="navtab" data-v="sop" onclick="show('sop')">launch sop</button>
       <button class="navtab" data-v="vote" onclick="show('vote')">vote</button>
+      <button class="navtab" data-v="ideas" onclick="show('ideas')">ideas</button>
     </div>
     <div class="counter"><span><b id="liveN">1</b> / 40 secured</span><div class="cbar"><i id="cbar"></i></div></div>
   </div>
@@ -481,6 +494,85 @@
     </div>
   </div>
 
+  <!-- ============ IDEAS VIEW ============ -->
+  <div class="view" id="view-ideas">
+    <div class="chapter" style="padding-top:26px">
+      <span class="tag">the growth lab · marketing</span>
+      <h2 style="font-size:30px">100 cafés is the distribution. these are the campaigns that fill them.</h2>
+      <p>the cafés get founders in the door. the job of marketing is to make them come back, bring a friend, and join the list, so every cup is also a step toward a corgi policy. one headline idea first, then the email engine, then the backlog.</p>
+    </div>
+
+    <div class="chapter">
+      <span class="num">the big swing</span>
+      <h2>the corgi passport</h2>
+      <p>steal the mcdonald's monopoly playbook, the one that had everyone buying fries to peel the sticker off the box. every corgi gives a <b>stamp</b>. collect stamps across cities and co-branded drinks, fill the card, and win. tap the stamps below to see it:</p>
+      <div class="stamps" id="stamps">
+        <div class="stamp" onclick="stampIt(this)">SF</div>
+        <div class="stamp" onclick="stampIt(this)">NYC</div>
+        <div class="stamp" onclick="stampIt(this)">LA</div>
+        <div class="stamp" onclick="stampIt(this)">AUS<br>TIN</div>
+        <div class="stamp" onclick="stampIt(this)">MIA<br>MI</div>
+        <div class="stamp" onclick="stampIt(this)">SEA<br>TTLE</div>
+        <div class="stamp" onclick="stampIt(this)">BOS<br>TON</div>
+        <div class="stamp" onclick="stampIt(this)">DEN<br>VER</div>
+      </div>
+      <div class="stampct" id="stampct">tap to collect · <b>0</b> / 8 cities stamped</div>
+      <p>here is why it is more than a gimmick. it does three jobs the rest of the business needs anyway. it drives <b>repeat visits and cross-city travel</b>, which is the entire expansion thesis. it turns every co-branded drink into a <b>collectible</b>, which feeds the partnership engine. and every passport registers with an <b>email</b>, which feeds the list. play it digital: the wifi-login QR stamps your card automatically, no paper to lose.</p>
+      <div class="pull">collect every city → a year of free corgi. collect the partner drinks → the startup-perk bundle (credits, swag, a founder dinner).</div>
+      <p>two collection tracks running at once, the <b>cities</b> track rewarding travel and the <b>partners</b> track rewarding trying the brexspresso, the pentagon smoothie, the qodo power-up. scarcity and a deadline do the rest: "complete your passport by labor day."</p>
+    </div>
+
+    <div class="chapter">
+      <span class="num">the engine</span>
+      <h2>every touchpoint grabs an email</h2>
+      <p>the newsletter is the owned audience that powers everything else, and it is the soft on-ramp to insurance. the trick is to never run a single email-capture mechanic, but to make <b>five surfaces</b> all feed one list:</p>
+      <div class="prec">
+        <div class="p"><div class="co">vote your city</div><div class="ls">vote with email, and when a city hits 500 the pod deploys (live in the vote tab).</div></div>
+        <div class="p"><div class="co">the wifi splash</div><div class="ls">guest wifi behind a one-tap corgi splash. the single highest-volume grab in any café.</div></div>
+        <div class="p"><div class="co">the passport</div><div class="ls">register your stamp card to save progress, and you are on the list.</div></div>
+        <div class="p"><div class="co">the corgi times</div><div class="ls">subscribe to the digital edition of the in-café paper.</div></div>
+      </div>
+      <p>try it, this is the same in-memory demo as the vote tab:</p>
+      <div class="voteform">
+        <input id="listEmail" type="email" placeholder="your email">
+        <button onclick="joinList()">join the corgi list →</button>
+        <div class="vmsg" id="listMsg" style="width:100%"></div>
+      </div>
+      <p style="font-size:13px;color:var(--muted)">every email is a rung on the funnel: free coffee, to regular, to founder who trusts corgi, to policy. the café is the cheapest top-of-funnel an insurance carrier has ever had.</p>
+    </div>
+
+    <div class="chapter">
+      <span class="num">the moat</span>
+      <h2>make the café a place you belong, not just buy</h2>
+      <p>coffee is a commodity, belonging is not. the deepest moat corgi can build is the feeling that this is <b>your</b> café, the room where your company started. foursquare proved people will fight over a "mayor" badge for status alone, and every taco bell regular wanted their name on the pin board. the same instinct, pointed at builders.</p>
+      <div class="prec">
+        <div class="p"><div class="co">🏅 the mayor of each café</div><div class="ls">most check-ins this month becomes mayor, name on a little brass tag by the bar, free drink, first dibs on events. status alone drives frequency.</div></div>
+        <div class="p"><div class="co">🏛️ the "started at corgi" wall</div><div class="ls">close a round or ship a launch as a regular, earn a brass plaque: "seed closed here · mar 2026." track what got built. it becomes a pilgrimage and a press story.</div></div>
+        <div class="p"><div class="co">📸 the polaroid wall</div><div class="ls">the community manager photographs the frequent builders and pins them up. taco-bell pin-board energy, the café papered floor to ceiling with its own people.</div></div>
+        <div class="p"><div class="co">🎫 the frequent pass</div><div class="ls">the passport, run like a frequent-flyer program. tiers, perks, a status you don't want to lose. the reason you walk past the other café.</div></div>
+      </div>
+      <div class="pull">the goal: a founder points at the wall and says "that's my polaroid, and that plaque is the round we closed at this table." you cannot buy that. it compounds.</div>
+      <p>and it all routes back to the business. the community manager isn't overhead, they are the engine that turns regulars into mayors, plaques into PR, and "started at corgi" into the most credible insurance pitch a carrier has ever had.</p>
+    </div>
+
+    <div class="chapter">
+      <span class="num">the backlog</span>
+      <h2>the campaign board</h2>
+      <p>the passport is the anchor. these are the always-on and seasonal plays that orbit it, most of them self-funding because a partner picks up the tab:</p>
+      <div class="ideagrid">
+        <div class="ideacard"><div class="ic">🎁 the corgi drop</div><div class="id">surprise pop-up or limited drink announced only to the list, 24-hour window. rewards being on the list and trains people to open the emails.</div><div class="ip">list growth · FOMO</div></div>
+        <div class="ideacard"><div class="ic">🤝 refer-to-insure</div><div class="id">recommend a founder who takes a corgi policy, earn a month of coffee credits. the single cleanest line from a cup of coffee to actual revenue.</div><div class="ip">the money loop</div></div>
+        <div class="ideacard"><div class="ic">⚡ partner takeover days</div><div class="id">a startup sponsors a free-coffee day, the pentagon smoothie launch, the qodo power-up. they get the foot traffic, corgi gets the marketing for free.</div><div class="ip">partner-funded</div></div>
+        <div class="ideacard"><div class="ic">🏙️ neighborhood drops</div><div class="id">launch each city's named drinks as an event, the flatiron, the brickell, the sand hill. local press loves a hometown menu.</div><div class="ip">local PR</div></div>
+        <div class="ideacard"><div class="ic">🧱 "powered by corgi" wall</div><div class="id">every startup insured by corgi gets its logo on the café wall. social proof, partner pull, and the insurance funnel made physical.</div><div class="ip">funnel · proof</div></div>
+        <div class="ideacard"><div class="ic">👕 limited merch drops</div><div class="id">the orange straw, the corgi mascot tee, hyped to the list and gone in a day. the cup becomes the billboard.</div><div class="ip">brand · scarcity</div></div>
+        <div class="ideacard"><div class="ic">🎓 demo-day corners</div><div class="id">pop-up corgi corners at YC, techstars, and a16z demo days. be where 100 founders are on the day they have cash.</div><div class="ip">acquisition</div></div>
+        <div class="ideacard"><div class="ic">☕ the 10th cup free</div><div class="id">the oldest loyalty trick that still works, but the punch card is digital, so the card is an email, so the email is the funnel.</div><div class="ip">retention</div></div>
+      </div>
+      <div class="foot" style="padding:14px 0 6px">a living board, refined after every campaign · concept for discussion, not official corgi data</div>
+    </div>
+  </div>
+
   <div class="foot" id="mapfoot">concept prototype · routing = inbound demand × founder/VC density × host availability · not official corgi data · map © openstreetmap · carto</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -652,6 +744,26 @@ function sopProg(){
     document.getElementById('sopct').textContent=done?(done+' of '+all.length+' steps done'):'tap a step to check it off';}
 }
 sopProg();
+
+// ---------- IDEAS: passport stamps + list signup ----------
+function stampIt(el){
+  el.classList.toggle('got');
+  var got=document.querySelectorAll('#stamps .stamp.got').length;
+  var total=document.querySelectorAll('#stamps .stamp').length;
+  var ct=document.getElementById('stampct');
+  if(got>=total){ct.innerHTML='🎉 passport complete · <b>a year of free corgi</b> unlocked';}
+  else{ct.innerHTML='tap to collect · <b>'+got+'</b> / '+total+' cities stamped';}
+}
+var listN=0;
+function joinList(){
+  var em=(document.getElementById('listEmail').value||'').trim();
+  var msg=document.getElementById('listMsg');
+  if(!/.+@.+\..+/.test(em)){msg.style.color='#c0392b';msg.textContent='enter a valid email to join.';return;}
+  listN++;
+  document.getElementById('listEmail').value='';
+  msg.style.color='#15A88A';
+  msg.textContent='you\'re on the corgi list. you\'ll hear about drops and new cities first.';
+}
 </script>
 </body>
 </html>
