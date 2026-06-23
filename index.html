@@ -209,11 +209,6 @@
 .wm{display:flex;align-items:center;gap:9px}
 .wmlogo{height:24px;width:auto;display:block}
 .mapwrap{position:relative}
-.runner{position:absolute;top:17%;left:-12%;width:58px;z-index:650;opacity:0;pointer-events:none;filter:drop-shadow(0 0 3px rgba(255,255,255,.85)) drop-shadow(0 3px 5px rgba(0,0,0,.45))}
-.runner img{display:block;width:100%;animation:bob .28s ease-in-out infinite}
-.runner.go{animation:run 4.6s cubic-bezier(.4,0,.6,1) forwards}
-@keyframes run{0%{left:-14%;opacity:0}10%{opacity:1}88%{opacity:1}100%{left:114%;opacity:0}}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3.5px)}}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden}
 .confetti i{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;opacity:.96;animation:fall 2.5s cubic-bezier(.2,.65,.4,1) forwards}
 @keyframes fall{0%{transform:translate(0,0) rotate(0deg);opacity:1}100%{transform:translate(var(--x,0px),105vh) rotate(560deg);opacity:.85}}
@@ -226,6 +221,17 @@
 .wn{color:#FFB67E}
 .ip{color:#FFB67E}
 .counter b{color:#fff}
+
+@keyframes rise{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+.view.entering>*{animation:rise .5s ease both}
+.view.entering>*:nth-child(2){animation-delay:.05s}
+.view.entering>*:nth-child(3){animation-delay:.1s}
+.view.entering>*:nth-child(4){animation-delay:.15s}
+.view.entering>*:nth-child(5){animation-delay:.2s}
+.view.entering>*:nth-child(n+6){animation-delay:.24s}
+.ticker{font-family:"Geist";font-size:14px;color:var(--muted);min-height:22px;margin:2px 0 12px;transition:opacity .3s}
+.ticker.fade{opacity:0}
+.ticker b{color:var(--corner);font-weight:700}
 </style>
 <body>
   <div class="top">
@@ -264,7 +270,6 @@
 
     <div class="mapwrap">
       <div id="map"></div>
-      <div class="runner" id="runner"><img src="/corgi-mark.svg" alt=""></div>
       <div class="legend">
         <span><i class="ld" style="background:var(--flag)"></i>flagship 24/7</span>
         <span><i class="ld" style="background:var(--exp)"></i>express counter</span>
@@ -315,11 +320,12 @@
       <h2>so build a few, host the rest</h2>
       <p>alexander cut the knot rather than pick at it. our cut is the <b>format ladder.</b> most of the 100 are not cafés you build, they are <b>corners you place.</b> three formats, matched to each market:</p>
       <div class="ladder">
-        <div class="fmt" style="border-left-color:var(--flag)"><div class="l"><h3>flagship 24/7</h3><div class="meta">months · $150–350k · anchor cities</div></div><div class="t" style="color:var(--flag)">~8</div></div>
+        <div class="fmt" style="border-left-color:var(--flag)"><div class="l"><h3>flagship 24/7</h3><div class="meta">months · $100–200k · anchor cities</div></div><div class="t" style="color:var(--flag)">~8</div></div>
         <div class="fmt" style="border-left-color:var(--exp)"><div class="l"><h3>express counter</h3><div class="meta">weeks · $30–80k · grab-and-go</div></div><div class="t" style="color:var(--exp)">~28</div></div>
         <div class="fmt" style="border-left-color:var(--corner)"><div class="l"><h3>corgi corner (host-embedded)</h3><div class="meta">days · &lt;$10k · hosts + partner cafés</div></div><div class="t" style="color:var(--corner)">~64</div></div>
       </div>
       <div class="pull">~64 corners + ~28 express + ~8 flagships = 100. the knot is cut.</div>
+      <div class="note2" style="border-left-color:var(--corner);background:#EAF7F1"><b>lean by design:</b> roughly <b>$3m</b> in total build cost opens all 100, most of it in sub-$10k corners. we hit the number on a fraction of the capital a full-build chain would burn.</div>
     </div>
 
     <div class="chapter">
@@ -544,6 +550,7 @@
       <span class="tag">demand routing · vote your city in</span>
       <h1>which city gets corgi next?</h1>
       <p style="font-size:15px;color:var(--muted);margin:0 0 6px">founders already reach out, "when is corgi coming to ___?" so make it official. <b style="color:var(--ink)">vote with your email; when a city hits 500, the launch pod deploys.</b> every vote also joins the corgi list, so you hear it first.</p>
+      <div class="ticker" id="demandTicker">founders are already asking when corgi is coming.</div>
       <div class="voteform">
         <input id="vEmail" type="email" placeholder="your email">
         <select id="vCity"></select>
@@ -554,7 +561,7 @@
       <p style="font-size:11px;color:var(--muted);margin-top:14px">concept prototype, votes are illustrative and reset on refresh. on the live site, each vote writes to corgi's list and trips the launch pod at 500.</p>
 
       <div style="border-top:1px solid var(--line);margin:30px 0 0;padding-top:24px"></div>
-      <span class="tag" style="background:var(--corner)">supply side · host a corgi</span>
+      <span class="tag" style="background:var(--corner);color:#fff">supply side · host a corgi</span>
       <h1 style="font-size:27px">have a space? bring corgi to it.</h1>
       <p style="font-size:15px;color:var(--muted);margin:0 0 12px">own a retail space, a lobby, or a building with room to spare? <b style="color:var(--ink)">a corgi café turns it into the room where your city's best founders work, every day.</b> who wouldn't want that in their building? corgi runs the whole thing, you get the foot traffic, the prestige, and an amenity your tenants brag about.</p>
       <div class="prec">
@@ -836,11 +843,14 @@
 
   <div class="foot" id="mapfoot">concept prototype · routing = inbound demand × founder/VC density × host availability · not official corgi data · map © openstreetmap · carto</div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+(function(){var cities=['austin','new york','miami','seattle','denver','los angeles','chicago','boston','salt lake city','atlanta','san diego','nashville'];var el=document.getElementById('demandTicker');if(!el)return;var i=0;function tick(){el.classList.add('fade');setTimeout(function(){el.innerHTML='founders in <b>'+cities[i%cities.length]+'</b> are asking when corgi is coming.';el.classList.remove('fade');i++;},300);}tick();setInterval(tick,3000);})();
+</script>
 <script>
 function show(v){
   document.querySelectorAll('.view').forEach(e=>e.style.display='none');
   document.getElementById('view-'+v).style.display='block';
+  if(v!=='map'){var __vw=document.getElementById('view-'+v);__vw.classList.remove('entering');void __vw.offsetWidth;__vw.classList.add('entering');setTimeout(function(){__vw.classList.remove('entering');},700);}
   document.querySelectorAll('.navtab').forEach(t=>t.classList.toggle('on',t.dataset.v===v));
   document.getElementById('mapfoot').style.display=v==='map'?'block':'none';
   if(v==='map'&&window._map){setTimeout(function(){window._map.invalidateSize();draw();},60);}
@@ -944,7 +954,6 @@ function upd(){const n=data.filter(c=>c.live).length;document.getElementById('li
 let campaigning=false;
 function runCampaign(){
   if(campaigning)return;campaigning=true;
-  var __rn=document.getElementById("runner");if(__rn){__rn.classList.remove("go");void __rn.offsetWidth;__rn.classList.add("go");setTimeout(function(){__rn.classList.remove("go");},4800);}
   data.forEach(c=>{if(c.id!=='sf')c.live=false;});
   lines.clearLayers();setWave('all');upd();
   const queue=data.filter(c=>!c.live).sort((a,b)=>a.wave-b.wave);
