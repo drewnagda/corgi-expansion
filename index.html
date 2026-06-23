@@ -134,7 +134,11 @@
   .times .story p{margin:0;font-family:Georgia,serif;font-size:11.5px;line-height:1.5;color:#3a3a36}
   .times .story.call{border:1px dashed var(--neon);border-radius:6px;padding:9px 11px;background:#fff}
   .times .story.call .h{color:var(--flag)}
-  @media(max-width:620px){.times .cols{column-count:1}.times .mast{font-size:27px}}
+  .times .topbar{display:flex;justify-content:space-between;gap:10px;font-family:Georgia,serif;font-size:8.5px;letter-spacing:.5px;text-transform:uppercase;color:#666;border-bottom:1px solid #ddd6c4;padding-bottom:5px;margin-bottom:7px}
+  .times .addr{font-family:Georgia,serif;font-size:9.5px;text-align:center;letter-spacing:.8px;text-transform:uppercase;color:#666;margin:5px 0 0;padding-bottom:10px;border-bottom:2.5px solid var(--ink)}
+  .times .hero{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:700;font-size:48px;line-height:.96;text-align:center;margin:15px 0 7px}
+  .times .deck{font-family:Georgia,serif;font-style:italic;font-size:13.5px;line-height:1.4;text-align:center;color:#444;margin:0 0 15px;border-bottom:1px solid #ddd6c4;padding-bottom:13px}
+  @media(max-width:620px){.times .cols{column-count:1}.times .mast{font-size:27px}.times .hero{font-size:34px}}
   .vcity{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin:0 0 9px}
   .vcity.unlocked{border-color:var(--neon);box-shadow:0 0 0 2px rgba(255,107,26,.35)}
   .vcity .vh{display:flex;justify-content:space-between;align-items:baseline}
@@ -571,13 +575,15 @@
       <h2>corgi owns a printing press. that changes everything.</h2>
       <p>most brands rent attention from facebook and google. corgi bought a <b>printing press</b> and sits it in HQ. the corgi times is a physical monthly paper in every café, and it is the single best loyalty, recruiting, and PR asset the network has, because corgi owns the megaphone outright.</p>
       <div class="times">
-        <div class="mast">The Corgi Times</div>
-        <div class="dl">vol. i · no. 4 · printed at corgi HQ · june 2026 · free to members</div>
+        <div class="topbar"><span>corgi insurance · www.corgi.com</span><span>the member spotlight</span><span>issue seven · at the speed of compute</span></div>
+        <div class="mast">🐾 Corgi Times</div>
+        <div class="addr">9 claude lane · san francisco, ca · june 2026 · free to members</div>
+        <div class="hero">Member Raises $100M</div>
+        <div class="deck">a corgi café regular signed the term sheet at the corner table on claude lane. "this room was my first office, and i wanted to close the round in it."</div>
         <div class="sec">✦ built at corgi ✦</div>
         <div class="cols">
-          <div class="story"><div class="h">austin founder closes $4m seed from the corner table</div><p>maya r. wrote her deck over six weeks of 6am mornings at corgi east austin. "i pitched forty funds from this chair." the round was led by a fund two blocks away.</p></div>
-          <div class="story"><div class="h">two strangers met at the SF bar, shipped in 90 days</div><p>they sat next to each other on claude lane for a month before saying hello. the demo went live tuesday. "corgi was our first office."</p></div>
-          <div class="story"><div class="h">slc team hits 10k users, throws the launch party here</div><p>the whole company crammed into the corner format on main street. the mayor of that café poured.</p></div>
+          <div class="story"><div class="h">the back story</div><p>she wrote the deck over six weeks of 6am mornings at the SF bar, pitched forty funds, and brought the lead in for a flat white before they shook hands. the plaque goes up this week.</p></div>
+          <div class="story"><div class="h">also this month</div><p>an austin pair who met on claude lane shipped in 90 days; an SLC team hit 10k users and threw the launch party in the corner format. the mayor poured.</p></div>
           <div class="story call"><div class="h">→ send us your story</div><p>get funded, ship a launch, or hit a milestone while building at corgi? email times@thecorgi.cafe. every member, every city, every month.</p></div>
         </div>
       </div>
