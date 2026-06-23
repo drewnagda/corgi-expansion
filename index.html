@@ -122,6 +122,13 @@
   .day .bpm{font-family:"Geist";font-weight:700;font-size:11px;color:#fff;background:var(--corner);border-radius:6px;padding:2px 7px;white-space:nowrap}
   .day .splay{font-family:"Geist";font-weight:700;font-size:11.5px;color:#fff;background:#1DB954;border-radius:7px;padding:6px 12px;white-space:nowrap;text-decoration:none;transition:transform .15s,filter .15s}
   .day .splay:hover{transform:translateY(-1px);filter:brightness(1.07)}
+  .plist{margin:0 0 24px}
+  .phead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px}
+  .pname{font-family:"Geist";font-weight:800;font-size:20px;letter-spacing:-.3px}
+  .ptime{font-family:"Geist";font-weight:700;font-size:11.5px;color:var(--neon);background:var(--ink);padding:3px 10px;border-radius:999px;white-space:nowrap}
+  .pdesc{font-size:13.5px;color:var(--muted);line-height:1.5;margin:0 0 11px}
+  .pdesc b{color:var(--ink);font-family:"Geist";font-weight:700}
+  .plist iframe{width:100%;border:0;border-radius:14px;display:block}
   .vote{max-width:620px;margin:0 auto;padding:26px 20px 40px}
   .vote h1{font-family:"Geist";font-weight:800;font-size:30px;letter-spacing:-.5px;margin:10px 0 8px;line-height:1.06}
   .voteform{display:flex;gap:8px;flex-wrap:wrap;background:var(--stone2);border:1px dashed var(--line);border-radius:14px;padding:14px;margin:14px 0}
@@ -204,6 +211,7 @@
       <button class="navtab" data-v="sop" onclick="show('sop')">launch sop</button>
       <button class="navtab" data-v="vote" onclick="show('vote')">vote</button>
       <button class="navtab" data-v="ideas" onclick="show('ideas')">ideas</button>
+      <button class="navtab" data-v="sounds" onclick="show('sounds')">sounds</button>
     </div>
     <div class="counter"><span><b id="liveN">1</b> / 40 secured</span><div class="cbar"><i id="cbar"></i></div></div>
   </div>
@@ -623,6 +631,38 @@
         <div class="ideacard"><div class="ic">☕ the 10th cup free</div><div class="id">the oldest loyalty trick that still works, but the punch card is digital, so the card is an email, so the email is the funnel.</div><div class="ip">retention</div></div>
       </div>
       <div class="foot" style="padding:14px 0 6px">a living board, refined after every campaign · concept for discussion, not official corgi data</div>
+    </div>
+  </div>
+
+  <!-- ============ SOUNDS VIEW ============ -->
+  <div class="view" id="view-sounds">
+    <div class="chapter" style="padding-top:26px">
+      <span class="tag">corgi sounds · the café soundtrack</span>
+      <h2 style="font-size:30px">every corgi sounds the same, on purpose.</h2>
+      <p>a café's vibe is sound plus the people in it. four playlists move the room through the day, the same spec in every location, so a corgi café <i>feels</i> like one whether you're in sf or slc. 101 songs each, live on spotify. press play:</p>
+    </div>
+    <div class="chapter" style="padding-top:0">
+      <div class="plist">
+        <div class="phead"><span class="pname">corgi relax</span><span class="ptime">6–11a · open</span></div>
+        <p class="pdesc">jazz piano, neo-classical, ambient, mellow chill to start the day soft. <b>bill evans · nils frahm · gogo penguin · hania rani</b></p>
+        <iframe src="https://open.spotify.com/embed/playlist/0HAm2BowAjV3qDXdfE7k24?utm_source=generator&theme=0" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <div class="plist">
+        <div class="phead"><span class="pname">corgi day</span><span class="ptime">11a–5p · build</span></div>
+        <p class="pdesc">groovy indie + electronic, build mode meets collab. <b>odesza · khruangbin · men i trust · parcels</b></p>
+        <iframe src="https://open.spotify.com/embed/playlist/1mHRQwMKtH9CdhfmetzUUK?utm_source=generator&theme=0" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <div class="plist">
+        <div class="phead"><span class="pname">corgi happy hour</span><span class="ptime">5–9p · golden hour</span></div>
+        <p class="pdesc">soulful, jazzy, feel-good house and disco for the social shift. <b>kaytranada · fkj · tom misch · anderson .paak</b></p>
+        <iframe src="https://open.spotify.com/embed/playlist/5zBjsmzotOGcicATxOeJZH?utm_source=generator&theme=0" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <div class="plist">
+        <div class="phead"><span class="pname">corgi after hours</span><span class="ptime">9p–6a · ship-it</span></div>
+        <p class="pdesc">downtempo + ambient focus beats to ship by, deep focus blended in. <b>four tet · jon hopkins · tycho · bonobo</b></p>
+        <iframe src="https://open.spotify.com/embed/playlist/7K4zYv0qVtdIoLidujDpMs?utm_source=generator&theme=0" height="152" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      <div class="foot" style="padding:6px 0 10px">one sound spec, every location · 101 songs per daypart · playlists live on spotify</div>
     </div>
   </div>
 
