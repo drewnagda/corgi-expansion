@@ -31,9 +31,12 @@
   .top{position:sticky;top:0;z-index:600;background:var(--ink);color:#fff;display:flex;justify-content:space-between;
     align-items:center;padding:10px 18px;flex-wrap:wrap;gap:10px}
   .wm{font-weight:800;font-size:16px;letter-spacing:-.2px}.wm i{color:var(--neon);font-style:normal}
-  .nav{display:flex;gap:6px;background:#2a2823;border-radius:999px;padding:4px}
-  .navtab{border:none;background:transparent;color:#cfccc4;font-weight:700;font-size:12.5px;padding:6px 16px;border-radius:999px;cursor:pointer}
-  .navtab.on{background:var(--neon);color:var(--ink)}
+  .nav{display:flex;gap:4px;background:#26241f;border-radius:999px;padding:5px;border:1px solid #3d3a32}
+  .navtab{border:none;background:transparent;color:#e8e5dc;font-weight:800;font-size:14px;letter-spacing:.2px;padding:9px 18px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
+  .navtab:hover{background:#3d3a32;color:#fff}
+  .navtab.on{background:var(--neon);color:var(--ink);box-shadow:0 2px 12px rgba(255,107,26,.5)}
+  .navtab.on:hover{background:var(--neon);color:var(--ink)}
+  @media(max-width:780px){.nav{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}.navtab{white-space:nowrap;font-size:13px;padding:8px 14px}}
   .counter{display:flex;align-items:center;gap:9px;font-family:"Geist";font-size:12px;color:#cfccc4}
   .counter b{color:#fff;font-weight:800;font-size:15px}
   .cbar{width:96px;height:6px;background:#3a382f;border-radius:99px;overflow:hidden}
