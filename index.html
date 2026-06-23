@@ -530,6 +530,24 @@
       </div>
       <div id="voteList"></div>
       <p style="font-size:11px;color:var(--muted);margin-top:14px">concept prototype, votes are illustrative and reset on refresh. on the live site, each vote writes to corgi's list and trips the launch pod at 500.</p>
+
+      <div style="border-top:1px solid var(--line);margin:30px 0 0;padding-top:24px"></div>
+      <span class="tag" style="background:var(--corner)">supply side · host a corgi</span>
+      <h1 style="font-size:27px">have a space? bring corgi to it.</h1>
+      <p style="font-size:15px;color:var(--muted);margin:0 0 12px">own a retail space, a lobby, or a building with room to spare? <b style="color:var(--ink)">a corgi café turns it into the room where your city's best founders work, every day.</b> who wouldn't want that in their building? corgi runs the whole thing, you get the foot traffic, the prestige, and an amenity your tenants brag about.</p>
+      <div class="prec">
+        <div class="p"><div class="co">foot traffic, all day</div><div class="ls">a 24/7 café pulls the city's builders through your doors from dawn to overnight.</div></div>
+        <div class="p"><div class="co">a tenant magnet</div><div class="ls">a corgi on the ground floor makes every office above it easier to lease.</div></div>
+        <div class="p"><div class="co">zero lift for you</div><div class="ls">corgi builds, staffs, and runs it. you bring the space, we bring the brand and the crowd.</div></div>
+      </div>
+      <div class="voteform">
+        <input id="hName" type="text" placeholder="your name">
+        <input id="hSpace" type="text" placeholder="building / space + city">
+        <input id="hEmail" type="email" placeholder="your email">
+        <button onclick="pitchHost()">pitch your space →</button>
+        <div class="vmsg" id="hMsg" style="width:100%"></div>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:6px">concept prototype, submissions are illustrative and reset on refresh.</p>
     </div>
   </div>
 
@@ -952,6 +970,19 @@ function castVote(){
   else{msg.style.color='#1A1A17';msg.textContent='vote #'+c.v+' for '+city+' counted, you\'re on the corgi list.';}
 }
 renderVotes();
+
+// ---------- host pitch (space owners) ----------
+var hostN=0;
+function pitchHost(){
+  var nm=(document.getElementById('hName').value||'').trim();
+  var sp=(document.getElementById('hSpace').value||'').trim();
+  var em=(document.getElementById('hEmail').value||'').trim();
+  var msg=document.getElementById('hMsg');
+  if(!nm||!sp||!/.+@.+\..+/.test(em)){msg.style.color='#c0392b';msg.textContent='add your name, your space, and a valid email.';return;}
+  hostN++;
+  document.getElementById('hName').value='';document.getElementById('hSpace').value='';document.getElementById('hEmail').value='';
+  msg.style.color='#15A88A';msg.textContent='got it, '+nm.split(' ')[0]+'. a corgi expansion lead will reach out about '+sp+'.';
+}
 
 // ---------- SOP interactive checklist ----------
 document.querySelectorAll('#view-sop .chk').forEach(function(el){
