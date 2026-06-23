@@ -927,6 +927,7 @@ function pop(c){
   h+=(c.live?'<div class="livetag">● secured</div>':'<button onclick="deployCity(\''+c.id+'\')">take it →</button>')+'</div>';
   return h;
 }
+const DIR={philadelphia:'left',pittsburgh:'left',dc:'left',charlotte:'left',atlanta:'left',detroit:'left',chicago:'left',nashville:'left',dallas:'left',houston:'left'};
 function mstyle(c){return {radius:c.live?10:6,color:c.live?'#FFFFFF':C[c.fmt],weight:c.live?2.5:1.5,fillColor:c.live?'#FF6B1A':C[c.fmt],fillOpacity:c.live?1:.95};}
 function draw(){
   layer.clearLayers();pulseLayer.clearLayers();markers={};
@@ -935,7 +936,7 @@ function draw(){
     const m=L.circleMarker([c.lat,c.lng],mstyle(c));
     m.bindPopup(pop(c));
     const lb=LBL[c.id]||[c.name,1];
-    if(wave!=='all'||lb[1]) m.bindTooltip(lb[0],{permanent:true,className:'c-tip'+(lb[1]?' c-tip-major':''),direction:'right',offset:[7,0]});
+    if(wave!=='all'||lb[1]){var __d=DIR[c.id]||'right';m.bindTooltip(lb[0],{permanent:true,className:'c-tip'+(lb[1]?' c-tip-major':''),direction:__d,offset:[__d==='left'?-7:7,0]});}
     layer.addLayer(m);markers[c.id]=m;
     if(m._path){m._path.classList.add('cmark');m._path.style.animation='popIn2 .5s ease both';m._path.style.animationDelay=(i*0.022)+'s';}
     if(c.live) addPulse(c);
