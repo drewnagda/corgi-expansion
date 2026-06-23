@@ -160,7 +160,7 @@
       <button class="navtab" data-v="sop" onclick="show('sop')">launch sop</button>
       <button class="navtab" data-v="vote" onclick="show('vote')">vote</button>
     </div>
-    <div class="counter"><span><b id="liveN">1</b> / 32 secured</span><div class="cbar"><i id="cbar"></i></div></div>
+    <div class="counter"><span><b id="liveN">1</b> / 40 secured</span><div class="cbar"><i id="cbar"></i></div></div>
   </div>
 
   <!-- ============ MAP VIEW ============ -->
@@ -176,7 +176,7 @@
     </div>
 
     <div class="regiontabs" id="regiontabs">
-      <button class="rtab on" data-w="all" onclick="setWave('all')">full campaign<small>all 32 clusters</small></button>
+      <button class="rtab on" data-w="all" onclick="setWave('all')">full campaign<small>all 40 clusters</small></button>
       <button class="rtab" data-w="1" onclick="setWave(1)">wave I<small>the home front · bay</small></button>
       <button class="rtab" data-w="2" onclick="setWave(2)">wave II<small>the coasts</small></button>
       <button class="rtab" data-w="3" onclick="setWave(3)">wave III<small>inland</small></button>
@@ -199,7 +199,7 @@
       <div class="spotlight">
         <h3>corgi café · 9 claude lane, sf</h3>
         <div class="addr">financial district · open 24/7 · profitable · the template</div>
-        <p>the proof and the launch point. from here we secure the bay (soma, then <b>sand hill road</b>, the densest vc cluster on earth) before taking the coasts, the inland strongholds, and the frontier. 32 clusters anchor the 100. see the <b>playbook tab</b> for how each one opens.</p>
+        <p>the proof and the launch point. from here we secure the bay (soma, then <b>sand hill road</b>, the densest vc cluster on earth) before taking the coasts, the inland strongholds, and the frontier. 40 vc clusters across the country anchor the 100, every one of them named with its startups and funds. see the <b>playbook tab</b> for how each one opens.</p>
       </div>
     </div>
   </div>
@@ -441,6 +441,23 @@
       </div>
       <div class="note2" style="border-left-color:var(--neon)"><b>the test:</b> a founder gets the exact same coffee, vibe, and welcome in pasadena as in flatiron. that is how you out-execute the incumbent: not 100 cafés, but 100 cafés that feel like one.</div>
 
+      <h2 class="k" style="margin-top:22px">borrowed from the icons</h2>
+      <div class="kit">
+        <div class="col"><h4>☕ starbucks</h4><ul>
+          <li>never franchised, so it <b>controls quality everywhere</b></li>
+          <li>one bean profile, roasted centrally to an <b>identical spec</b></li>
+          <li>same sops, same barista training, every store</li>
+          <li>controls menu, layout + training at every location</li>
+        </ul></div>
+        <div class="col"><h4>🚗 uber</h4><ul>
+          <li>a standardized <b>180-step launch playbook</b> per city</li>
+          <li>one central product, identical in every market</li>
+          <li>a <b>gm</b> who owns the city but runs the central spec</li>
+          <li>launched a city a day without losing the brand</li>
+        </ul></div>
+      </div>
+      <div class="note2" style="border-left-color:var(--neon)"><b>corgi does both:</b> company-owned cafés (not franchised), one roaster of record, one launch playbook, one brand passport, and a gm who owns the score. control the spec centrally; let the city run on it.</div>
+
       <div class="bignote" style="background:var(--card);color:var(--ink);border:1px solid var(--line)"><b style="color:var(--ink)">what "great" means to a founder :</b> fast wifi that never drops a call · power everywhere · coffee worth the walk · comfortable, non-cramped seating · a place to take a call · long / 24-7 hours · a community you want to belong to. nail these and they don't just visit, they move in.</div>
 
       <div class="foot" style="padding:6px 0 10px">a living document, refined after every open · concept for discussion, not official corgi data</div>
@@ -480,7 +497,7 @@ function show(v){
 const C={flagship:'#D2541F',express:'#3A86E8',corner:'#15A88A'};
 const FL={flagship:'flagship 24/7',express:'express counter',corner:'corgi corner'};
 // [shortLabel, showAtNationalView]
-const LBL={sf:['SF',1],soma:['soma',0],jackson:['jackson sq',0],sandhill:['sand hill rd',0],paloalto:['palo alto',0],mtnview:['mtn view',0],oakland:['oakland',0],nyflat:['NYC',1],nysoho:['soho',0],dumbo:['dumbo',0],kendall:['BOSTON',1],backbay:['back bay',0],santamonica:['LA',1],venice:['venice',0],pasadena:['pasadena',0],slu:['SEATTLE',1],pioneer:['pioneer sq',0],austin:['AUSTIN',1],lehi:['SLC',1],slc:['salt lake',0],boulder:['BOULDER',1],denver:['denver',0],chicago:['CHICAGO',1],miami:['MIAMI',1],atlanta:['ATLANTA',1],durham:['RALEIGH',1],sandiego:['SAN DIEGO',1],dallas:['DALLAS',1],dc:['DC',1],pittsburgh:['PITTSBURGH',1],scottsdale:['PHOENIX',1],nashville:['NASHVILLE',1]};
+const LBL={sf:['SF',1],soma:['soma',0],jackson:['jackson sq',0],sandhill:['sand hill rd',0],paloalto:['palo alto',0],mtnview:['mtn view',0],oakland:['oakland',0],nyflat:['NYC',1],nysoho:['soho',0],dumbo:['dumbo',0],kendall:['BOSTON',1],backbay:['back bay',0],santamonica:['LA',1],venice:['venice',0],pasadena:['pasadena',0],slu:['SEATTLE',1],pioneer:['pioneer sq',0],austin:['AUSTIN',1],lehi:['SLC',1],slc:['salt lake',0],boulder:['BOULDER',1],denver:['denver',0],chicago:['CHICAGO',1],miami:['MIAMI',1],atlanta:['ATLANTA',1],durham:['RALEIGH',1],sandiego:['SAN DIEGO',1],dallas:['DALLAS',1],dc:['DC',1],pittsburgh:['PITTSBURGH',1],scottsdale:['PHOENIX',1],nashville:['NASHVILLE',1],elsegundo:['el segundo',0],philadelphia:['PHILLY',1],houston:['HOUSTON',1],columbus:['COLUMBUS',1],minneapolis:['MPLS',1],detroit:['DETROIT',1],portland:['PORTLAND',1],charlotte:['CHARLOTTE',1]};
 // region: which views a pin appears in
 let data=[
  // ----- WAVE I · the home front (bay area) -----
@@ -489,7 +506,7 @@ let data=[
  {id:'jackson',name:'jackson square',wave:1,lat:37.7965,lng:-122.4036,fmt:'corner',live:false,s:'faire · samsara · vanta',v:'many funds now cluster here',why:"fidi's vc row."},
  {id:'sandhill',name:'sand hill road',wave:1,lat:37.4221,lng:-122.2030,fmt:'flagship',live:false,s:'',v:'sequoia, a16z, kleiner, greylock, lightspeed',why:'menlo park. densest vc cluster on earth, 60+ series a funds in 5 miles.'},
  {id:'paloalto',name:'palo alto',wave:1,lat:37.4440,lng:-122.1610,fmt:'express',live:false,s:'palantir · glean · hp',v:'accel, felicis',why:'university ave, stanford-adjacent.'},
- {id:'mtnview',name:'mountain view',wave:1,lat:37.3939,lng:-122.0790,fmt:'corner',live:false,s:'google · intuit · 23andme',v:'',why:'castro st, googleplex orbit.'},
+ {id:'mtnview',name:'mountain view',wave:1,lat:37.3939,lng:-122.0790,fmt:'corner',live:false,s:'google · intuit · 23andme',v:'gv (google ventures)',why:'castro st, googleplex orbit.'},
  {id:'oakland',name:'oakland',wave:1,lat:37.8044,lng:-122.2712,fmt:'express',live:false,s:'blue bottle · pandora · clif bar',v:'kapor capital',why:'cheaper bay, fast-rising founders.'},
  // ----- WAVE II · the coasts -----
  {id:'nyflat',name:'flatiron, nyc',wave:2,lat:40.7400,lng:-73.9903,fmt:'flagship',live:false,s:'ramp · runway · kalshi',v:'usv, lerer hippeau',why:'2nd-largest vc market on earth.'},
@@ -498,27 +515,35 @@ let data=[
  {id:'kendall',name:'kendall square',wave:2,lat:42.3625,lng:-71.0843,fmt:'flagship',live:false,s:'moderna · ginkgo bioworks · manifold bio',v:'flagship pioneering, a16z bio, polaris',why:'cambridge. densest biotech cluster on earth.'},
  {id:'backbay',name:'back bay, boston',wave:2,lat:42.3500,lng:-71.0810,fmt:'express',live:false,s:'wasabi · hi marley · cohere health',v:'general catalyst, battery',why:"boston's vc spine. insurtech + health."},
  {id:'santamonica',name:'santa monica',wave:2,lat:34.0195,lng:-118.4912,fmt:'flagship',live:false,s:'goodrx · whatnot · spotter',v:'upfront ventures',why:'silicon beach.'},
- {id:'venice',name:'venice, la',wave:2,lat:33.9890,lng:-118.4650,fmt:'express',live:false,s:'snap · google · summer fridays',v:'',why:'creative + consumer tech.'},
- {id:'pasadena',name:'pasadena',wave:2,lat:34.1478,lng:-118.1445,fmt:'express',live:false,s:'idealab · caltech + jpl spinouts',v:'',why:"deep tech. drew's backyard, fast build."},
+ {id:'venice',name:'venice, la',wave:2,lat:33.9890,lng:-118.4650,fmt:'express',live:false,s:'snap · google · summer fridays',v:'crosscut ventures',why:'creative + consumer tech.'},
+ {id:'pasadena',name:'pasadena',wave:2,lat:34.1478,lng:-118.1445,fmt:'express',live:false,s:'idealab · caltech + jpl spinouts',v:'idealab, alpha edison',why:"deep tech. drew's backyard, fast build."},
+ {id:'elsegundo',name:'el segundo',wave:2,lat:33.9192,lng:-118.4165,fmt:'corner',live:false,s:'beyond meat · the aerospace corp · spacex (hawthorne)',v:'aerospace + defense angels',why:'the la aerospace + defense-tech corridor.'},
  {id:'slu',name:'south lake union',wave:2,lat:47.6250,lng:-122.3370,fmt:'flagship',live:false,s:'amazon · highspot · outreach',v:'madrona',why:'seattle. amazon + ai talent.'},
- {id:'pioneer',name:'pioneer square',wave:2,lat:47.6015,lng:-122.3340,fmt:'corner',live:false,s:'remitly · amperity · pioneer square labs',v:'',why:'seattle downtown density.'},
+ {id:'pioneer',name:'pioneer square',wave:2,lat:47.6015,lng:-122.3340,fmt:'corner',live:false,s:'remitly · amperity · pioneer square labs',v:'pioneer square labs',why:'seattle downtown density.'},
  // ----- WAVE III · inland strongholds -----
  {id:'austin',name:'east austin',wave:3,lat:30.2672,lng:-97.7340,fmt:'flagship',live:false,s:'icon · firefly aerospace · the boring company',v:'founders fund, 8vc',why:'defense + hard-tech capital.'},
  {id:'lehi',name:'silicon slopes',wave:3,lat:40.4136,lng:-111.8762,fmt:'flagship',live:false,s:'qualtrics · lucid software · podium',v:'pelion, album vc',why:'lehi, ut. corgi office nearby.'},
- {id:'slc',name:'salt lake city',wave:3,lat:40.7608,lng:-111.8910,fmt:'corner',live:false,s:'recursion · taxbit · route',v:'',why:"the slopes' urban front."},
+ {id:'slc',name:'salt lake city',wave:3,lat:40.7608,lng:-111.8910,fmt:'corner',live:false,s:'recursion · taxbit · route',v:'kickstart fund',why:"the slopes' urban front."},
  {id:'boulder',name:'boulder',wave:3,lat:40.0176,lng:-105.2797,fmt:'express',live:false,s:'boom supersonic · solid power · orbit fab',v:'foundry group, techstars',why:'aerospace + climate. the techstars birthplace.'},
- {id:'denver',name:'rino, denver',wave:3,lat:39.7660,lng:-104.9780,fmt:'corner',live:false,s:'guild · ibotta · gusto',v:'',why:'front range founder district.'},
- {id:'chicago',name:'fulton market',wave:3,lat:41.8860,lng:-87.6570,fmt:'express',live:false,s:'project44 · g2 · tovala',v:'',why:"chicago's b2b + fintech corridor."},
- {id:'miami',name:'brickell, miami',wave:3,lat:25.7617,lng:-80.1918,fmt:'flagship',live:false,s:'moonpay · openstore · novo',v:'',why:'founder influx, crypto + fintech.'},
+ {id:'denver',name:'rino, denver',wave:3,lat:39.7660,lng:-104.9780,fmt:'corner',live:false,s:'guild · ibotta · gusto',v:'access venture partners',why:'front range founder district.'},
+ {id:'chicago',name:'fulton market',wave:3,lat:41.8860,lng:-87.6570,fmt:'express',live:false,s:'project44 · g2 · tovala',v:'pritzker group, hyde park angels',why:"chicago's b2b + fintech corridor."},
+ {id:'miami',name:'brickell, miami',wave:3,lat:25.7617,lng:-80.1918,fmt:'flagship',live:false,s:'moonpay · openstore · novo',v:'fuel venture capital',why:'founder influx, crypto + fintech.'},
  // ----- WAVE IV · the frontier -----
  {id:'atlanta',name:'tech square',wave:4,lat:33.7770,lng:-84.3890,fmt:'express',live:false,s:'calendly · greenlight · onetrust',v:'atlanta ventures',why:'georgia tech ecosystem.'},
- {id:'durham',name:'research triangle',wave:4,lat:35.9940,lng:-78.8986,fmt:'corner',live:false,s:'epic games · pendo · spreedly',v:'',why:'deep tech + biotech, duke/unc.'},
- {id:'sandiego',name:'la jolla',wave:4,lat:32.8700,lng:-117.2200,fmt:'express',live:false,s:'clickup · qualcomm · brain corp',v:'',why:'biotech + wireless, san diego.'},
- {id:'dallas',name:'deep ellum',wave:4,lat:32.7840,lng:-96.7840,fmt:'corner',live:false,s:'island · securonix · cyrusone',v:'',why:'enterprise + the trucking vertical.'},
+ {id:'durham',name:'research triangle',wave:4,lat:35.9940,lng:-78.8986,fmt:'corner',live:false,s:'epic games · pendo · spreedly',v:'idea fund partners',why:'deep tech + biotech, duke/unc.'},
+ {id:'sandiego',name:'la jolla',wave:4,lat:32.8700,lng:-117.2200,fmt:'express',live:false,s:'clickup · qualcomm · brain corp',v:'tech coast angels',why:'biotech + wireless, san diego.'},
+ {id:'dallas',name:'deep ellum',wave:4,lat:32.7840,lng:-96.7840,fmt:'corner',live:false,s:'island · securonix · cyrusone',v:'green park & golf ventures',why:'enterprise + the trucking vertical.'},
  {id:'dc',name:'arlington, dc',wave:4,lat:38.8950,lng:-77.0710,fmt:'corner',live:false,s:'id.me · morning consult · babel street',v:'revolution',why:'govtech + revolution.'},
- {id:'pittsburgh',name:'pittsburgh',wave:4,lat:40.4440,lng:-79.9530,fmt:'corner',live:false,s:'duolingo · aurora innovation · gecko robotics',v:'',why:'robotics + ai, carnegie mellon.'},
- {id:'scottsdale',name:'scottsdale',wave:4,lat:33.4940,lng:-111.9260,fmt:'corner',live:false,s:'axon · carvana · trainual',v:'',why:'sun-belt rising scene.'},
- {id:'nashville',name:'nashville',wave:4,lat:36.1620,lng:-86.7810,fmt:'corner',live:false,s:'built technologies · healthstream · change healthcare',v:'',why:'healthtech hub.'},
+ {id:'pittsburgh',name:'pittsburgh',wave:4,lat:40.4440,lng:-79.9530,fmt:'corner',live:false,s:'duolingo · aurora innovation · gecko robotics',v:'innovation works',why:'robotics + ai, carnegie mellon.'},
+ {id:'scottsdale',name:'scottsdale',wave:4,lat:33.4940,lng:-111.9260,fmt:'corner',live:false,s:'axon · carvana · trainual',v:'social leverage',why:'sun-belt rising scene.'},
+ {id:'nashville',name:'nashville',wave:4,lat:36.1620,lng:-86.7810,fmt:'corner',live:false,s:'built technologies · healthstream · change healthcare',v:'frist cressey ventures',why:'healthtech hub.'},
+ {id:'philadelphia',name:'philadelphia',wave:4,lat:39.9526,lng:-75.1652,fmt:'express',live:false,s:'gopuff · dbt labs · perpay',v:'first round capital, comcast ventures',why:'b2b saas + the penn / drexel pipeline.'},
+ {id:'houston',name:'houston',wave:4,lat:29.7604,lng:-95.3698,fmt:'corner',live:false,s:'axiom space · cart.com · solugen',v:'mercury fund',why:'space, energy-tech + health.'},
+ {id:'columbus',name:'columbus',wave:4,lat:39.9612,lng:-82.9988,fmt:'corner',live:false,s:'root insurance · olive ai · beam dental',v:'drive capital',why:'insurtech + the midwest rising.'},
+ {id:'minneapolis',name:'minneapolis',wave:4,lat:44.9778,lng:-93.2650,fmt:'corner',live:false,s:'jamf · sezzle · bright health',v:'matchstick ventures',why:'medtech + b2b saas.'},
+ {id:'detroit',name:'detroit',wave:4,lat:42.3314,lng:-83.0458,fmt:'corner',live:false,s:'stockx · rocket · llamasoft',v:'ludlow ventures, detroit venture partners',why:'mobility + commerce.'},
+ {id:'portland',name:'portland',wave:4,lat:45.5152,lng:-122.6784,fmt:'corner',live:false,s:'vacasa · new relic · puppet',v:'rogue venture partners',why:'dev tools + consumer brands.'},
+ {id:'charlotte',name:'charlotte',wave:4,lat:35.2271,lng:-80.8431,fmt:'corner',live:false,s:'red ventures · avidxchange · passport',v:'idea fund partners',why:'fintech + the new south.'},
 ];
 let wave='all';
 const map=L.map('map',{scrollWheelZoom:false}).setView([39.5,-98.4],4);window._map=map;
