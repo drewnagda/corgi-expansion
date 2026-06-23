@@ -1,0 +1,24 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <!-- ears -->
+  <path d="M30 8 C24 26 26 42 38 52 L52 40 C46 28 40 16 30 8 Z" fill="#E0913F"/>
+  <path d="M90 8 C96 26 94 42 82 52 L68 40 C74 28 80 16 90 8 Z" fill="#E0913F"/>
+  <path d="M33 20 C30 31 32 40 39 46 L47 39 C44 31 39 25 33 20 Z" fill="#F2C09A"/>
+  <path d="M87 20 C90 31 88 40 81 46 L73 39 C76 31 81 25 87 20 Z" fill="#F2C09A"/>
+  <!-- head -->
+  <path d="M60 30 C84 30 100 46 100 68 C100 90 82 104 60 104 C38 104 20 90 20 68 C20 46 36 30 60 30 Z" fill="#E8A052"/>
+  <!-- white blaze + muzzle -->
+  <path d="M60 34 C66 34 70 44 70 56 C78 60 84 70 84 80 C84 94 73 104 60 104 C47 104 36 94 36 80 C36 70 42 60 50 56 C50 44 54 34 60 34 Z" fill="#FBF6EE"/>
+  <!-- eyes -->
+  <circle cx="44" cy="60" r="6" fill="#2A211A"/>
+  <circle cx="76" cy="60" r="6" fill="#2A211A"/>
+  <circle cx="46" cy="58" r="2" fill="#fff"/>
+  <circle cx="78" cy="58" r="2" fill="#fff"/>
+  <!-- nose -->
+  <path d="M54 70 C54 67 66 67 66 70 C66 74 62 77 60 77 C58 77 54 74 54 70 Z" fill="#2A211A"/>
+  <!-- mouth -->
+  <path d="M60 77 L60 84" stroke="#2A211A" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <path d="M60 84 C54 90 46 89 44 84" stroke="#2A211A" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <path d="M60 84 C66 90 74 89 76 84" stroke="#2A211A" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <!-- tongue -->
+  <path d="M56 86 C56 84 64 84 64 86 L64 93 C64 96 56 96 56 93 Z" fill="#F2849A"/>
+</svg>
