@@ -37,7 +37,7 @@
   .navtab:hover{background:#3d3a32;color:#fff}
   .navtab.on{background:var(--neon);color:var(--ink);box-shadow:0 2px 12px rgba(255,107,26,.5)}
   .navtab.on:hover{background:var(--neon);color:var(--ink)}
-  @media(max-width:780px){.nav{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}.navtab{white-space:nowrap;font-size:13px;padding:8px 14px}}
+  @media(max-width:780px){.top{flex-wrap:wrap;gap:8px}.nav{order:3;width:100%;flex-wrap:wrap;justify-content:center;border-radius:18px}.counter{order:2}.navtab{white-space:nowrap;font-size:12.5px;padding:7px 11px}}
   .counter{display:flex;align-items:center;gap:9px;font-family:"Geist";font-size:12px;color:#cfccc4}
   .counter b{color:#fff;font-weight:800;font-size:15px}
   .cbar{width:96px;height:6px;background:#3a382f;border-radius:99px;overflow:hidden}
@@ -260,11 +260,12 @@
 
 /* ===== ideas illustrations ===== */
 .artrow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:10px 0 4px}
-@media(max-width:680px){.artrow{grid-template-columns:1fr}}
+@media(max-width:680px){.artrow{grid-template-columns:1fr;gap:10px}.artcard{flex-direction:row;align-items:center;gap:14px;padding:12px 14px}.artcard svg{width:92px;flex:none}.artcard .t{margin-top:0}}
 .artcard{background:#FBF3EC;border:1px solid var(--line);border-radius:16px;padding:14px 14px 16px;display:flex;flex-direction:column}
 .artcard svg{width:100%;height:auto;display:block}
 .artcard .t{font-family:"Geist";font-weight:800;font-size:13.5px;margin-top:11px;color:var(--ink)}
 .artcard .s{font-family:"Geist";font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.42}
+.sitefoot{text-align:center;font-family:"Geist";font-weight:600;font-size:11px;color:#9b968c;background:var(--ink);padding:13px 18px;line-height:1.5;letter-spacing:.2px}
 </style>
 <body>
   <div class="top">
@@ -956,6 +957,8 @@
   </div>
 
   <div class="foot" id="mapfoot">concept prototype · routing = inbound demand × founder/VC density × host availability · not official corgi data · map © openstreetmap · carto</div>
+
+  <div class="sitefoot">an independent concept by drew nagda · not affiliated with, authorized by, or endorsed by corgi · illustrative only, not official corgi data.</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
 (function(){var cities=['austin','new york','miami','seattle','denver','los angeles','chicago','boston','salt lake city','atlanta','san diego','nashville'];var el=document.getElementById('demandTicker');if(!el)return;var i=0;function tick(){el.classList.add('fade');setTimeout(function(){el.innerHTML='founders in <b>'+cities[i%cities.length]+'</b> are asking when corgi is coming.';el.classList.remove('fade');i++;},300);}tick();setInterval(tick,3000);})();
