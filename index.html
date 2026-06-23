@@ -209,7 +209,7 @@
 .wm{display:flex;align-items:center;gap:9px}
 .wmlogo{height:24px;width:auto;display:block}
 .mapwrap{position:relative}
-.runner{position:absolute;top:45%;left:-12%;width:50px;z-index:650;opacity:0;pointer-events:none}
+.runner{position:absolute;top:17%;left:-12%;width:58px;z-index:650;opacity:0;pointer-events:none;filter:drop-shadow(0 0 3px rgba(255,255,255,.85)) drop-shadow(0 3px 5px rgba(0,0,0,.45))}
 .runner img{display:block;width:100%;animation:bob .38s ease-in-out infinite}
 .runner.go{animation:run 7.5s linear forwards}
 @keyframes run{0%{left:-12%;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:112%;opacity:0}}
@@ -217,6 +217,15 @@
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden}
 .confetti i{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;opacity:.96;animation:fall 2.5s cubic-bezier(.2,.65,.4,1) forwards}
 @keyframes fall{0%{transform:translate(0,0) rotate(0deg);opacity:1}100%{transform:translate(var(--x,0px),105vh) rotate(560deg);opacity:.85}}
+
+.intro b{color:#FFB276}
+.bignote b{color:#FFB276}
+.cta .sig{color:#FFB276}
+.chapter .num{color:#FFB67E}
+.ptime{color:#FFB67E}
+.wn{color:#FFB67E}
+.ip{color:#FFB67E}
+.counter b{color:#fff}
 </style>
 <body>
   <div class="top">
@@ -669,7 +678,7 @@
   <div class="view" id="view-sounds">
     <div class="chapter" style="padding-top:26px">
       <span class="tag">corgi sounds · the café soundtrack</span>
-      <h2 style="font-size:30px">every corgi sounds the same, on purpose.</h2>
+      <h2 style="font-size:30px">the sounds of corgi.</h2>
       <p>a café's vibe is sound plus the people in it. three playlists move the room through the day, the same spec in every location, so a corgi café feels like one whether you're in sf or slc. all live on spotify. press play:</p>
     </div>
     <div class="chapter" style="padding-top:0">
