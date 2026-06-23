@@ -210,10 +210,10 @@
 .wmlogo{height:24px;width:auto;display:block}
 .mapwrap{position:relative}
 .runner{position:absolute;top:17%;left:-12%;width:58px;z-index:650;opacity:0;pointer-events:none;filter:drop-shadow(0 0 3px rgba(255,255,255,.85)) drop-shadow(0 3px 5px rgba(0,0,0,.45))}
-.runner img{display:block;width:100%;animation:bob .38s ease-in-out infinite}
-.runner.go{animation:run 7.5s linear forwards}
-@keyframes run{0%{left:-12%;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:112%;opacity:0}}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.runner img{display:block;width:100%;animation:bob .28s ease-in-out infinite}
+.runner.go{animation:run 4.6s cubic-bezier(.4,0,.6,1) forwards}
+@keyframes run{0%{left:-14%;opacity:0}10%{opacity:1}88%{opacity:1}100%{left:114%;opacity:0}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3.5px)}}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden}
 .confetti i{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;opacity:.96;animation:fall 2.5s cubic-bezier(.2,.65,.4,1) forwards}
 @keyframes fall{0%{transform:translate(0,0) rotate(0deg);opacity:1}100%{transform:translate(var(--x,0px),105vh) rotate(560deg);opacity:.85}}
@@ -944,7 +944,7 @@ function upd(){const n=data.filter(c=>c.live).length;document.getElementById('li
 let campaigning=false;
 function runCampaign(){
   if(campaigning)return;campaigning=true;
-  var __rn=document.getElementById("runner");if(__rn){__rn.classList.remove("go");void __rn.offsetWidth;__rn.classList.add("go");setTimeout(function(){__rn.classList.remove("go");},7600);}
+  var __rn=document.getElementById("runner");if(__rn){__rn.classList.remove("go");void __rn.offsetWidth;__rn.classList.add("go");setTimeout(function(){__rn.classList.remove("go");},4800);}
   data.forEach(c=>{if(c.id!=='sf')c.live=false;});
   lines.clearLayers();setWave('all');upd();
   const queue=data.filter(c=>!c.live).sort((a,b)=>a.wave-b.wave);
