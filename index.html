@@ -198,6 +198,7 @@
   .pop .prow b{font-family:"Geist";font-weight:700;color:#1A1A17;display:block;font-size:9px;letter-spacing:.5px;text-transform:uppercase;margin-bottom:1px}
   .leaflet-tooltip.c-tip{background:rgba(18,18,16,.82);color:#fff;border:none;border-radius:5px;font-family:"Geist";font-weight:700;font-size:10px;letter-spacing:.3px;text-transform:none;padding:2px 6px;box-shadow:0 1px 5px rgba(0,0,0,.45)}
   .leaflet-tooltip.c-tip:before{display:none}
+  .leaflet-tooltip.c-tip-major{background:rgba(18,18,16,.95);font-weight:800;font-size:10.5px;z-index:1000 !important}
   .cmark{transform-box:fill-box;transform-origin:center}
   @keyframes popIn2{0%{transform:scale(0);opacity:0}70%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
   .radar{display:block;width:14px;height:14px;border-radius:50%;border:2px solid #FF6B1A;opacity:0;animation:radar 2.3s ease-out infinite}
@@ -868,8 +869,8 @@ let data=[
  {id:'soma',name:'soma / south park',wave:1,lat:37.7785,lng:-122.3970,fmt:'express',live:false,s:'rippling · brex · notion',v:'south park seed funds',why:'the original yc + seed-fund orbit.'},
  {id:'jackson',name:'jackson square',wave:1,lat:37.7965,lng:-122.4036,fmt:'corner',live:false,s:'faire · samsara · vanta',v:'many funds now cluster here',why:"fidi's vc row."},
  {id:'sandhill',name:'sand hill road',wave:1,lat:37.4221,lng:-122.2030,fmt:'flagship',live:false,s:'',v:'sequoia, a16z, kleiner, greylock, lightspeed',why:'menlo park. densest vc cluster on earth, 60+ series a funds in 5 miles.'},
- {id:'paloalto',name:'palo alto',wave:1,lat:37.4440,lng:-122.1610,fmt:'express',live:false,s:'palantir · glean · hp',v:'accel, felicis',why:'university ave, stanford-adjacent.'},
- {id:'mtnview',name:'mountain view',wave:1,lat:37.3939,lng:-122.0790,fmt:'corner',live:false,s:'google · intuit · 23andme',v:'gv (google ventures)',why:'castro st, googleplex orbit.'},
+ {id:'paloalto',name:'palo alto',wave:1,lat:37.4440,lng:-122.1610,fmt:'express',live:false,s:'applovin · glean · hp',v:'accel, felicis',why:'university ave, stanford-adjacent.'},
+ {id:'mtnview',name:'mountain view',wave:1,lat:37.3939,lng:-122.0790,fmt:'corner',live:false,s:'google · intuit · waymo',v:'gv (google ventures)',why:'castro st, googleplex orbit.'},
  {id:'oakland',name:'oakland',wave:1,lat:37.8044,lng:-122.2712,fmt:'express',live:false,s:'blue bottle · pandora · clif bar',v:'kapor capital',why:'cheaper bay, fast-rising founders.'},
  // ----- WAVE II · the coasts -----
  {id:'nyflat',name:'flatiron, nyc',wave:2,lat:40.7400,lng:-73.9903,fmt:'flagship',live:false,s:'ramp · runway · kalshi',v:'usv, lerer hippeau',why:'2nd-largest vc market on earth.'},
@@ -903,13 +904,13 @@ let data=[
  {id:'philadelphia',name:'philadelphia',wave:4,lat:39.9526,lng:-75.1652,fmt:'express',live:false,s:'gopuff · dbt labs · perpay',v:'first round capital, comcast ventures',why:'b2b saas + the penn / drexel pipeline.'},
  {id:'houston',name:'houston',wave:4,lat:29.7604,lng:-95.3698,fmt:'corner',live:false,s:'axiom space · cart.com · solugen',v:'mercury fund',why:'space, energy-tech + health.'},
  {id:'tulsa',name:'tulsa',wave:4,lat:36.1540,lng:-95.9928,fmt:'corner',live:false,s:'tulsa remote · atlas school · vendoo',v:'george kaiser family foundation, tulsa innovation labs',why:'a foundation-funded hub importing remote talent + autonomy.'},
- {id:'minneapolis',name:'minneapolis',wave:4,lat:44.9778,lng:-93.2650,fmt:'corner',live:false,s:'jamf · sezzle · bright health',v:'matchstick ventures',why:'medtech + b2b saas.'},
- {id:'detroit',name:'detroit',wave:4,lat:42.3314,lng:-83.0458,fmt:'corner',live:false,s:'stockx · rocket · llamasoft',v:'ludlow ventures, detroit venture partners',why:'mobility + commerce.'},
- {id:'portland',name:'portland',wave:4,lat:45.5152,lng:-122.6784,fmt:'corner',live:false,s:'vacasa · new relic · puppet',v:'rogue venture partners',why:'dev tools + consumer brands.'},
+ {id:'minneapolis',name:'minneapolis',wave:4,lat:44.9778,lng:-93.2650,fmt:'corner',live:false,s:'jamf · sezzle · code42',v:'matchstick ventures',why:'medtech + b2b saas.'},
+ {id:'detroit',name:'detroit',wave:4,lat:42.3314,lng:-83.0458,fmt:'corner',live:false,s:'stockx · rocket · autobooks',v:'ludlow ventures, detroit venture partners',why:'mobility + commerce.'},
+ {id:'portland',name:'portland',wave:4,lat:45.5152,lng:-122.6784,fmt:'corner',live:false,s:'vacasa · jama software · puppet',v:'rogue venture partners',why:'dev tools + consumer brands.'},
  {id:'charlotte',name:'charlotte',wave:4,lat:35.2271,lng:-80.8431,fmt:'corner',live:false,s:'red ventures · avidxchange · passport',v:'idea fund partners',why:'fintech + the new south.'},
 ];
 let wave='all';
-const map=L.map('map',{scrollWheelZoom:false}).setView([39.5,-98.4],4);window._map=map;
+const map=L.map('map',{scrollWheelZoom:false}).setView([39.5,-98.4],4);window._map=map;map.on('zoomend',function(){if(typeof updLabels==='function')updLabels();});
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
   {attribution:'Tiles © Esri',maxZoom:16}).addTo(map);
 const lines=L.layerGroup().addTo(map);
@@ -934,13 +935,15 @@ function draw(){
     const m=L.circleMarker([c.lat,c.lng],mstyle(c));
     m.bindPopup(pop(c));
     const lb=LBL[c.id]||[c.name,1];
-    if(wave!=='all'||lb[1]) m.bindTooltip(lb[0],{permanent:true,className:'c-tip',direction:'right',offset:[7,0]});
+    if(wave!=='all'||lb[1]) m.bindTooltip(lb[0],{permanent:true,className:'c-tip'+(lb[1]?' c-tip-major':''),direction:'right',offset:[7,0]});
     layer.addLayer(m);markers[c.id]=m;
     if(m._path){m._path.classList.add('cmark');m._path.style.animation='popIn2 .5s ease both';m._path.style.animationDelay=(i*0.022)+'s';}
     if(c.live) addPulse(c);
   });
   if(items.length) map.fitBounds(items.map(c=>[c.lat,c.lng]),{padding:[45,45],maxZoom:wave==='all'?5:9});
+  updLabels();
 }
+function updLabels(){var z=map.getZoom();document.querySelectorAll('.leaflet-tooltip.c-tip:not(.c-tip-major)').forEach(function(t){t.style.display=z>=7?'':'none';});}
 function setWave(w){wave=w;lines.clearLayers();document.querySelectorAll('.rtab').forEach(t=>t.classList.toggle('on',t.dataset.w===String(w)));draw();}
 function conquer(id){
   const c=data.find(x=>x.id===id);if(!c||c.live)return;c.live=true;
