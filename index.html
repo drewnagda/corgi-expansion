@@ -497,7 +497,7 @@ function show(v){
 const C={flagship:'#D2541F',express:'#3A86E8',corner:'#15A88A'};
 const FL={flagship:'flagship 24/7',express:'express counter',corner:'corgi corner'};
 // [shortLabel, showAtNationalView]
-const LBL={sf:['SF',1],soma:['soma',0],jackson:['jackson sq',0],sandhill:['sand hill rd',0],paloalto:['palo alto',0],mtnview:['mtn view',0],oakland:['oakland',0],nyflat:['NYC',1],nysoho:['soho',0],dumbo:['dumbo',0],kendall:['BOSTON',1],backbay:['back bay',0],santamonica:['LA',1],venice:['venice',0],pasadena:['pasadena',0],slu:['SEATTLE',1],pioneer:['pioneer sq',0],austin:['AUSTIN',1],lehi:['SLC',1],slc:['salt lake',0],boulder:['BOULDER',1],denver:['denver',0],chicago:['CHICAGO',1],miami:['MIAMI',1],atlanta:['ATLANTA',1],durham:['RALEIGH',1],sandiego:['SAN DIEGO',1],dallas:['DALLAS',1],dc:['DC',1],pittsburgh:['PITTSBURGH',1],scottsdale:['PHOENIX',1],nashville:['NASHVILLE',1],elsegundo:['el segundo',0],philadelphia:['PHILLY',1],houston:['HOUSTON',1],columbus:['COLUMBUS',1],minneapolis:['MPLS',1],detroit:['DETROIT',1],portland:['PORTLAND',1],charlotte:['CHARLOTTE',1]};
+const LBL={sf:['SF',1],soma:['soma',0],jackson:['jackson sq',0],sandhill:['sand hill rd',0],paloalto:['palo alto',0],mtnview:['mtn view',0],oakland:['oakland',0],nyflat:['NYC',1],nysoho:['soho',0],dumbo:['dumbo',0],kendall:['BOSTON',1],backbay:['back bay',0],santamonica:['LA',1],venice:['venice',0],pasadena:['pasadena',0],slu:['SEATTLE',1],pioneer:['pioneer sq',0],austin:['AUSTIN',1],lehi:['SLC',1],slc:['salt lake',0],boulder:['BOULDER',1],denver:['denver',0],chicago:['CHICAGO',1],miami:['MIAMI',1],atlanta:['ATLANTA',1],durham:['RALEIGH',1],sandiego:['SAN DIEGO',1],dallas:['DALLAS',1],dc:['DC',1],pittsburgh:['PITTSBURGH',1],scottsdale:['PHOENIX',1],nashville:['NASHVILLE',1],elsegundo:['el segundo',0],philadelphia:['PHILLY',1],houston:['HOUSTON',1],tulsa:['TULSA',1],minneapolis:['MPLS',1],detroit:['DETROIT',1],portland:['PORTLAND',1],charlotte:['CHARLOTTE',1]};
 // region: which views a pin appears in
 let data=[
  // ----- WAVE I · the home front (bay area) -----
@@ -517,7 +517,7 @@ let data=[
  {id:'santamonica',name:'santa monica',wave:2,lat:34.0195,lng:-118.4912,fmt:'flagship',live:false,s:'goodrx · whatnot · spotter',v:'upfront ventures',why:'silicon beach.'},
  {id:'venice',name:'venice, la',wave:2,lat:33.9890,lng:-118.4650,fmt:'express',live:false,s:'snap · google · summer fridays',v:'crosscut ventures',why:'creative + consumer tech.'},
  {id:'pasadena',name:'pasadena',wave:2,lat:34.1478,lng:-118.1445,fmt:'express',live:false,s:'idealab · caltech + jpl spinouts',v:'idealab, alpha edison',why:"deep tech. drew's backyard, fast build."},
- {id:'elsegundo',name:'el segundo',wave:2,lat:33.9192,lng:-118.4165,fmt:'corner',live:false,s:'beyond meat · the aerospace corp · spacex (hawthorne)',v:'aerospace + defense angels',why:'the la aerospace + defense-tech corridor.'},
+ {id:'elsegundo',name:'el segundo',wave:2,lat:33.9192,lng:-118.4165,fmt:'corner',live:false,s:'spacex (hawthorne) · hadrian · apex space',v:'riot ventures, founders fund · tbpn',why:'the "gundo" aerospace + defense-tech renaissance.'},
  {id:'slu',name:'south lake union',wave:2,lat:47.6250,lng:-122.3370,fmt:'flagship',live:false,s:'amazon · highspot · outreach',v:'madrona',why:'seattle. amazon + ai talent.'},
  {id:'pioneer',name:'pioneer square',wave:2,lat:47.6015,lng:-122.3340,fmt:'corner',live:false,s:'remitly · amperity · pioneer square labs',v:'pioneer square labs',why:'seattle downtown density.'},
  // ----- WAVE III · inland strongholds -----
@@ -539,7 +539,7 @@ let data=[
  {id:'nashville',name:'nashville',wave:4,lat:36.1620,lng:-86.7810,fmt:'corner',live:false,s:'built technologies · healthstream · change healthcare',v:'frist cressey ventures',why:'healthtech hub.'},
  {id:'philadelphia',name:'philadelphia',wave:4,lat:39.9526,lng:-75.1652,fmt:'express',live:false,s:'gopuff · dbt labs · perpay',v:'first round capital, comcast ventures',why:'b2b saas + the penn / drexel pipeline.'},
  {id:'houston',name:'houston',wave:4,lat:29.7604,lng:-95.3698,fmt:'corner',live:false,s:'axiom space · cart.com · solugen',v:'mercury fund',why:'space, energy-tech + health.'},
- {id:'columbus',name:'columbus',wave:4,lat:39.9612,lng:-82.9988,fmt:'corner',live:false,s:'root insurance · olive ai · beam dental',v:'drive capital',why:'insurtech + the midwest rising.'},
+ {id:'tulsa',name:'tulsa',wave:4,lat:36.1540,lng:-95.9928,fmt:'corner',live:false,s:'tulsa remote · atlas school · vendoo',v:'george kaiser family foundation, tulsa innovation labs',why:'a foundation-funded hub importing remote talent + autonomy.'},
  {id:'minneapolis',name:'minneapolis',wave:4,lat:44.9778,lng:-93.2650,fmt:'corner',live:false,s:'jamf · sezzle · bright health',v:'matchstick ventures',why:'medtech + b2b saas.'},
  {id:'detroit',name:'detroit',wave:4,lat:42.3314,lng:-83.0458,fmt:'corner',live:false,s:'stockx · rocket · llamasoft',v:'ludlow ventures, detroit venture partners',why:'mobility + commerce.'},
  {id:'portland',name:'portland',wave:4,lat:45.5152,lng:-122.6784,fmt:'corner',live:false,s:'vacasa · new relic · puppet',v:'rogue venture partners',why:'dev tools + consumer brands.'},
