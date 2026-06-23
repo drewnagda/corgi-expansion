@@ -205,10 +205,22 @@
   .pop button{font-family:"Geist";font-weight:700;font-size:12px;border:none;border-radius:8px;padding:7px 12px;background:var(--ink);color:#fff;cursor:pointer;width:100%}
   .pop .livetag{font-family:"Geist";font-weight:700;font-size:12px;color:var(--corner)}
   @media(max-width:620px){.roll{grid-template-columns:repeat(3,1fr)}#map{height:430px}.pb h1{font-size:32px}}
+
+.wm{display:flex;align-items:center;gap:9px}
+.wmlogo{height:24px;width:auto;display:block}
+.mapwrap{position:relative}
+.runner{position:absolute;top:45%;left:-12%;width:50px;z-index:650;opacity:0;pointer-events:none}
+.runner img{display:block;width:100%;animation:bob .38s ease-in-out infinite}
+.runner.go{animation:run 7.5s linear forwards}
+@keyframes run{0%{left:-12%;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:112%;opacity:0}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:99999;overflow:hidden}
+.confetti i{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;opacity:.96;animation:fall 2.5s cubic-bezier(.2,.65,.4,1) forwards}
+@keyframes fall{0%{transform:translate(0,0) rotate(0deg);opacity:1}100%{transform:translate(var(--x,0px),105vh) rotate(560deg);opacity:.85}}
 </style>
 <body>
   <div class="top">
-    <div class="wm">corgi café <i>expansion</i></div>
+    <div class="wm"><img class="wmlogo" src="/corgi-mark.svg" alt="corgi">corgi café <i>expansion</i></div>
     <div class="nav">
       <button class="navtab on" data-v="map" onclick="show('map')">map</button>
       <button class="navtab" data-v="playbook" onclick="show('playbook')">playbook</button>
@@ -243,6 +255,7 @@
 
     <div class="mapwrap">
       <div id="map"></div>
+      <div class="runner" id="runner"><img src="/corgi-mark.svg" alt=""></div>
       <div class="legend">
         <span><i class="ld" style="background:var(--flag)"></i>flagship 24/7</span>
         <span><i class="ld" style="background:var(--exp)"></i>express counter</span>
@@ -922,6 +935,7 @@ function upd(){const n=data.filter(c=>c.live).length;document.getElementById('li
 let campaigning=false;
 function runCampaign(){
   if(campaigning)return;campaigning=true;
+  var __rn=document.getElementById("runner");if(__rn){__rn.classList.remove("go");void __rn.offsetWidth;__rn.classList.add("go");setTimeout(function(){__rn.classList.remove("go");},7600);}
   data.forEach(c=>{if(c.id!=='sf')c.live=false;});
   lines.clearLayers();setWave('all');upd();
   const queue=data.filter(c=>!c.live).sort((a,b)=>a.wave-b.wave);
@@ -1011,12 +1025,13 @@ function buildProg(){
 buildProg();
 
 // ---------- IDEAS: passport stamps + list signup ----------
+function fireConfetti(){var cols=["#FF6B1A","#1A1A17","#15A88A","#3A86E8","#FFD43B"];var c=document.createElement("div");c.className="confetti";document.body.appendChild(c);for(var i=0;i<64;i++){var p=document.createElement("i");p.style.left=(Math.random()*100)+"%";p.style.background=cols[i%cols.length];p.style.animationDelay=(Math.random()*0.35)+"s";p.style.setProperty("--x",(Math.random()*240-120)+"px");c.appendChild(p);}setTimeout(function(){c.remove();},3000);}
 function stampIt(el){
   el.classList.toggle('got');
   var got=document.querySelectorAll('#stamps .stamp.got').length;
   var total=document.querySelectorAll('#stamps .stamp').length;
   var ct=document.getElementById('stampct');
-  if(got>=total){ct.innerHTML='passport complete · <b>a year of free corgi</b> unlocked';}
+  if(got>=total){ct.innerHTML='passport complete · <b>a year of free corgi</b> unlocked';fireConfetti();}
   else{ct.innerHTML='tap to collect · <b>'+got+'</b> / '+total+' cities stamped';}
 }
 var listN=0;
