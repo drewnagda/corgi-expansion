@@ -181,8 +181,22 @@
   .herobtns .votecta{margin-top:0}
   .runbtn{font-family:"Geist";font-weight:800;font-size:13px;padding:9px 18px;border:none;border-radius:10px;background:var(--neon);color:var(--ink);cursor:pointer;box-shadow:0 3px 14px rgba(255,107,26,.4)}
   .runbtn:hover{filter:brightness(1.06)}
-  .knot .cut{stroke-dasharray:170;stroke-dashoffset:170;animation:cut 1.05s cubic-bezier(.7,0,.3,1) .35s forwards}
-  @keyframes cut{to{stroke-dashoffset:0}}
+  .knot use{transform-box:fill-box;transform-origin:50% 50%}
+  .knot .cut{stroke-dasharray:170;stroke-dashoffset:170}
+  .knot .half{opacity:0}
+  .knot .glint{opacity:0}
+  .knot.go .cut{animation:kcut .42s cubic-bezier(.5,0,.2,1) .5s forwards, kcutfade .45s ease 1.2s forwards}
+  .knot.go .whole{animation:ktight .55s ease both, kwhole .01s linear .92s forwards}
+  .knot.go .ha{animation:ksliceA .8s cubic-bezier(.2,.8,.25,1) .92s forwards}
+  .knot.go .hb{animation:ksliceB .8s cubic-bezier(.2,.8,.25,1) .92s forwards}
+  .knot.go .glint{animation:kglint .42s ease .84s}
+  @keyframes kcut{to{stroke-dashoffset:0}}
+  @keyframes kcutfade{to{opacity:0}}
+  @keyframes ktight{0%{transform:scale(1)}55%{transform:scale(.95)}100%{transform:scale(1)}}
+  @keyframes kwhole{to{opacity:0}}
+  @keyframes ksliceA{0%{opacity:1;transform:translate(0,0) rotate(0deg)}100%{opacity:1;transform:translate(-7px,-9px) rotate(-6deg)}}
+  @keyframes ksliceB{0%{opacity:1;transform:translate(0,0) rotate(0deg)}100%{opacity:1;transform:translate(7px,9px) rotate(6deg)}}
+  @keyframes kglint{0%{opacity:0;transform:scale(.4)}45%{opacity:.95;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
   .sopprog{height:9px;background:var(--stone2);border-radius:99px;overflow:hidden;margin:12px 0 4px}
   .sopprog i{display:block;height:100%;width:3%;background:var(--neon);transition:width .35s}
   #sopct{font-family:"Geist";font-weight:700;font-size:11px;color:var(--muted);margin-bottom:6px;letter-spacing:.3px}
@@ -345,15 +359,23 @@
   <div class="view" id="view-playbook">
     <div class="pb">
       <div class="eyebrow">the launch playbook · corgiexpansion.com</div>
-      <h1>don't untie the knot.<br>cut it.</h1>
+      <h1>don't untie the knot.<br>slice it.</h1>
       <svg class="knot" viewBox="0 0 120 120" fill="none">
-        <g stroke="#1A1A17" stroke-width="7" stroke-linecap="round">
-          <path d="M30 30 C60 50 60 70 90 90"/>
-          <path d="M90 30 C60 50 60 70 30 90"/>
-          <path d="M30 60 C50 60 70 60 90 60" opacity=".5"/>
-          <circle cx="60" cy="60" r="34" opacity=".25"/>
-        </g>
+        <defs>
+          <clipPath id="kclipA"><polygon points="0,0 120,0 120,13 0,116"/></clipPath>
+          <clipPath id="kclipB"><polygon points="0,116 120,13 120,120 0,120"/></clipPath>
+          <g id="knotpaths" stroke="#1A1A17" stroke-width="7" stroke-linecap="round" fill="none">
+            <path d="M30 30 C60 50 60 70 90 90"/>
+            <path d="M90 30 C60 50 60 70 30 90"/>
+            <path d="M30 60 C50 60 70 60 90 60" opacity=".5"/>
+            <circle cx="60" cy="60" r="34" opacity=".25"/>
+          </g>
+        </defs>
+        <use class="whole" href="#knotpaths"/>
+        <use class="half ha" href="#knotpaths" clip-path="url(#kclipA)"/>
+        <use class="half hb" href="#knotpaths" clip-path="url(#kclipB)"/>
         <line class="cut" x1="14" y1="104" x2="112" y2="20" stroke="#FF6B1A" stroke-width="6" stroke-linecap="round"/>
+        <circle class="glint" cx="62" cy="62" r="6" fill="#FFE0CC"/>
       </svg>
     </div>
 
@@ -363,7 +385,7 @@
       <span class="num">i · the launch math</span>
       <h2>one café every 1.8 days, by design</h2>
       <p>100 launches in 6 months is <b>one café every 1.8 days.</b> the unlock is simple: full-build a few anchors, and <b>place</b> the rest as lighter formats. the pace stops being heroic and starts being routine.</p>
-      <p>three levers move together, <b>speed, capital, and demand.</b> run them in parallel and the math works for you. the model below does exactly that.</p>
+      <p>three levers move together, <b>speed, capital, and demand.</b> run them in parallel and the math works for you.</p>
     </div>
 
     <div class="chapter">
@@ -375,7 +397,7 @@
         <div class="fmt" style="border-left-color:var(--exp)"><div class="l"><h3>express counter</h3><div class="meta">weeks · $30–80k · grab-and-go</div></div><div class="t" style="color:var(--exp)">~28</div></div>
         <div class="fmt" style="border-left-color:var(--corner)"><div class="l"><h3>corgi corner (host-embedded)</h3><div class="meta">days · &lt;$10k · hosts + partner cafés</div></div><div class="t" style="color:var(--corner)">~64</div></div>
       </div>
-      <div class="pull">~64 corners + ~28 express + ~8 flagships = 100. the knot is cut.</div>
+      <div class="pull">~64 corners + ~28 express + ~8 flagships = 100. the knot is sliced.</div>
       <div class="note2" style="border-left-color:var(--corner);background:#EAF7F1"><b>lean by design:</b> most of the 100 are <b>sub-$10k corners</b>, not full builds, so the capital concentrates on a handful of flagships. we hit the number on a fraction of what a full-build chain would spend.</div>
     </div>
 
@@ -391,7 +413,7 @@
     <div class="chapter">
       <span class="num">iv · the launch playbook</span>
       <h2>the four moves behind the pace</h2>
-      <p>these are not theories. they are the proven moves of fast physical rollouts, made ours:</p>
+      <p>the proven moves of fast physical rollouts, made ours:</p>
       <div class="prec">
         <div class="p"><div class="co">the launch pod</div><div class="ls">a small city team (a general manager owning the p&l, supply ops, demand marketing) runs a tight, numbered launch playbook. done right, that pace can hit a city a day.</div></div>
         <div class="p"><div class="co">the launcher checklist</div><div class="ls">a launcher researches a market, signs the partners, and opens it in <b>6 to 8 weeks</b> off a repeatable checklist.</div></div>
@@ -1016,7 +1038,7 @@ function show(v){
   document.querySelectorAll('.navtab').forEach(t=>t.classList.toggle('on',t.dataset.v===v));
   document.getElementById('mapfoot').style.display=v==='map'?'block':'none';
   if(v==='map'&&window._map){setTimeout(function(){window._map.invalidateSize();draw();},60);}
-  if(v==='playbook'){var ln=document.querySelector('.knot .cut');if(ln){ln.style.animation='none';void ln.offsetWidth;ln.style.animation='';}}
+  if(v==='playbook'){var k=document.querySelector('.knot');if(k){k.classList.remove('go');void k.offsetWidth;k.classList.add('go');}}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 const C={flagship:'#D2541F',express:'#3A86E8',corner:'#15A88A'};
