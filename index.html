@@ -272,6 +272,18 @@
 .idx .i{background:var(--ink);border-radius:14px;padding:14px 13px 13px}
 .idx .v{font-family:"Geist";font-weight:800;font-size:25px;color:#FFB276;letter-spacing:-.5px;line-height:1}
 .idx .c{font-family:"Geist";font-size:11.5px;color:#cfccc4;margin-top:5px;line-height:1.35}
+
+/* take-it magic */
+.cburst{display:block;width:16px;height:16px;border-radius:50%;border:3px solid #FF6B1A;opacity:.95;animation:cburst .72s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes cburst{0%{transform:scale(.3);opacity:.95}100%{transform:scale(4.4);opacity:0}}
+.counter.pop{animation:cpop .5s ease}
+@keyframes cpop{0%{transform:scale(1)}40%{transform:scale(1.16)}100%{transform:scale(1)}}
+.plusone{position:fixed;z-index:2000;font-family:"Geist";font-weight:800;font-size:15px;color:#FF6B1A;pointer-events:none;text-shadow:0 1px 4px rgba(0,0,0,.4);animation:plusone 1s ease-out forwards}
+@keyframes plusone{0%{transform:translateY(2px);opacity:0}18%{opacity:1}100%{transform:translateY(-26px);opacity:0}}
+.takendone{position:fixed;left:50%;top:48%;transform:translate(-50%,-50%);z-index:2000;background:rgba(26,26,23,.95);color:#fff;font-family:"Geist";font-weight:800;font-size:17px;line-height:1.45;letter-spacing:.2px;padding:16px 24px;border-radius:16px;box-shadow:0 10px 36px rgba(0,0,0,.45);opacity:0;text-align:center;pointer-events:none}
+.takendone b{color:#FFB276;font-size:15px}
+.takendone.show{animation:takendone 2.7s ease forwards}
+@keyframes takendone{0%{opacity:0;transform:translate(-50%,-50%) scale(.92)}12%{opacity:1;transform:translate(-50%,-50%) scale(1)}82%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1)}}
 </style>
 <body>
   <div class="top">
@@ -293,7 +305,7 @@
     <div class="hero">
       <span class="tag">the campaign map · concept by drew nagda</span>
       <h1>where there are builders, there&#39;s corgi.</h1>
-      <div class="intro"><b>the concept is proven at 9 claude lane.</b> now founders across the country are asking corgi to come to them. every dot is a real vc cluster, the blocks where founders and capital already sit. we don't chase "cities," we take territory: the bay, then the coasts, then inland, then the frontier.</div>
+      <div class="intro"><b>validated at 9 claude lane.</b> now founders everywhere are asking corgi to come to them. every dot is a real vc cluster, where founders and capital already sit. we don't chase cities, we take territory, bay to coasts to frontier.</div>
       <div class="herobtns">
         <button class="runbtn" onclick="runCampaign()">▶ run the campaign</button>
         <button class="votecta" onclick="show('vote')">vote your city in →</button>
@@ -324,7 +336,7 @@
       <div class="spotlight">
         <h3>corgi café · 9 claude lane, sf</h3>
         <div class="addr">financial district · open 24/7 · profitable · the template</div>
-        <p>the proof and the launch point. from here we secure the bay (soma, then <b>sand hill road</b>, the densest vc cluster on earth) before taking the coasts, the inland strongholds, and the frontier. 40 vc clusters across the country anchor the 100, every one of them named with its startups and funds. see the <b>playbook tab</b> for how each one opens.</p>
+        <p>the proof and the launch point. from here we take the bay (soma, then <b>sand hill road</b>, the densest vc cluster on earth), then the coasts, the inland strongholds, and the frontier, 40 vc clusters that anchor the 100, each named with its startups and funds. see the <b>playbook tab</b> for how each one opens.</p>
       </div>
     </div>
   </div>
@@ -1098,12 +1110,15 @@ function setWave(w){wave=w;lines.clearLayers();document.querySelectorAll('.rtab'
 function conquer(id){
   const c=data.find(x=>x.id===id);if(!c||c.live)return;c.live=true;
   const m=markers[id];if(m){m.setStyle(mstyle(c));m.setPopupContent(pop(c));if(m._path){m._path.style.animation='popIn2 .4s ease both';}}
+  try{var __b=L.marker([c.lat,c.lng],{icon:L.divIcon({className:'',html:'<span class="cburst"></span>',iconSize:[16,16],iconAnchor:[8,8]}),interactive:false,keyboard:false});__b.addTo(pulseLayer);setTimeout(function(){pulseLayer.removeLayer(__b);},760);}catch(e){}
   addPulse(c);
   if(wave==='all'&&id!=='sf'){L.polyline([HQ,[c.lat,c.lng]],{color:'#FF6B1A',weight:1.2,opacity:.4,dashArray:'3 5'}).addTo(lines);}
   upd();
 }
-function deployCity(id){conquer(id);markers[id]&&markers[id].openPopup();}
+function deployCity(id){var __was=(data.find(x=>x.id===id)||{}).live;conquer(id);if(!__was)secureFx();markers[id]&&markers[id].openPopup();}
 function upd(){const n=data.filter(c=>c.live).length;document.getElementById('liveN').textContent=n;document.getElementById('cbar').style.width=Math.round(n/data.length*100)+'%';}
+function secureFx(){var cn=document.querySelector('.counter');if(!cn)return;cn.classList.remove('pop');void cn.offsetWidth;cn.classList.add('pop');var r=cn.getBoundingClientRect();var p=document.createElement('div');p.className='plusone';p.textContent='+1';p.style.left=(r.left+r.width/2-8)+'px';p.style.top=(r.top-2)+'px';document.body.appendChild(p);setTimeout(function(){p.remove();},1000);}
+function campaignDone(){var el=document.createElement('div');el.className='takendone show';el.innerHTML='the map is ours<br><b>40 / 40 clusters secured</b>';document.body.appendChild(el);setTimeout(function(){el.remove();},2800);fireConfetti();}
 let campaigning=false;
 function runCampaign(){
   if(campaigning)return;campaigning=true;
@@ -1112,7 +1127,7 @@ function runCampaign(){
   const queue=data.filter(c=>!c.live).sort((a,b)=>a.wave-b.wave);
   let i=0,cur=0;
   (function step(){
-    if(i>=queue.length){campaigning=false;map.flyToBounds(data.map(c=>[c.lat,c.lng]),{padding:[45,45],maxZoom:5,duration:1.2});return;}
+    if(i>=queue.length){campaigning=false;map.flyToBounds(data.map(c=>[c.lat,c.lng]),{padding:[45,45],maxZoom:5,duration:1.2});setTimeout(campaignDone,700);return;}
     const c=queue[i];
     if(c.wave!==cur){cur=c.wave;const wp=data.filter(x=>x.wave===cur).map(x=>[x.lat,x.lng]);
       map.flyToBounds(wp,{padding:[60,60],maxZoom:8,duration:1.0});
