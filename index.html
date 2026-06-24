@@ -181,21 +181,15 @@
   .herobtns .votecta{margin-top:0}
   .runbtn{font-family:"Geist";font-weight:800;font-size:13px;padding:9px 18px;border:none;border-radius:10px;background:var(--neon);color:var(--ink);cursor:pointer;box-shadow:0 3px 14px rgba(255,107,26,.4)}
   .runbtn:hover{filter:brightness(1.06)}
-  .knot use{transform-box:fill-box;transform-origin:50% 50%}
+  .knot .whole{transform-box:fill-box;transform-origin:50% 50%}
   .knot .cut{stroke-dasharray:170;stroke-dashoffset:170}
-  .knot .half{opacity:0}
   .knot .glint{opacity:0}
-  .knot.go .cut{animation:kcut .42s cubic-bezier(.5,0,.2,1) .5s forwards, kcutfade .45s ease 1.2s forwards}
-  .knot.go .whole{animation:ktight .55s ease both, kwhole .01s linear .92s forwards}
-  .knot.go .ha{animation:ksliceA .8s cubic-bezier(.2,.8,.25,1) .92s forwards}
-  .knot.go .hb{animation:ksliceB .8s cubic-bezier(.2,.8,.25,1) .92s forwards}
-  .knot.go .glint{animation:kglint .42s ease .84s}
-  @keyframes kcut{to{stroke-dashoffset:0}}
-  @keyframes kcutfade{to{opacity:0}}
+  .knot.go .whole{animation:ktight .55s ease both, kjolt .2s ease .88s}
+  .knot.go .cut{animation:kcut .42s cubic-bezier(.5,0,.2,1) .5s forwards}
+  .knot.go .glint{animation:kglint .42s ease .82s}
   @keyframes ktight{0%{transform:scale(1)}55%{transform:scale(.95)}100%{transform:scale(1)}}
-  @keyframes kwhole{to{opacity:0}}
-  @keyframes ksliceA{0%{opacity:1;transform:translate(0,0) rotate(0deg)}100%{opacity:1;transform:translate(-7px,-9px) rotate(-6deg)}}
-  @keyframes ksliceB{0%{opacity:1;transform:translate(0,0) rotate(0deg)}100%{opacity:1;transform:translate(7px,9px) rotate(6deg)}}
+  @keyframes kjolt{0%{transform:scale(1) rotate(0deg)}45%{transform:scale(1.05) rotate(1.2deg)}100%{transform:scale(1) rotate(0deg)}}
+  @keyframes kcut{to{stroke-dashoffset:0}}
   @keyframes kglint{0%{opacity:0;transform:scale(.4)}45%{opacity:.95;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
   .sopprog{height:9px;background:var(--stone2);border-radius:99px;overflow:hidden;margin:12px 0 4px}
   .sopprog i{display:block;height:100%;width:3%;background:var(--neon);transition:width .35s}
@@ -361,20 +355,13 @@
       <div class="eyebrow">the launch playbook · corgiexpansion.com</div>
       <h1>don't untie the knot.<br>slice it.</h1>
       <svg class="knot" viewBox="0 0 120 120" fill="none">
-        <defs>
-          <clipPath id="kclipA"><polygon points="0,0 120,0 120,13 0,116"/></clipPath>
-          <clipPath id="kclipB"><polygon points="0,116 120,13 120,120 0,120"/></clipPath>
-          <g id="knotpaths" stroke="#1A1A17" stroke-width="7" stroke-linecap="round" fill="none">
-            <path d="M30 30 C60 50 60 70 90 90"/>
-            <path d="M90 30 C60 50 60 70 30 90"/>
-            <path d="M30 60 C50 60 70 60 90 60" opacity=".5"/>
-            <circle cx="60" cy="60" r="34" opacity=".25"/>
-          </g>
-        </defs>
-        <use class="whole" href="#knotpaths"/>
-        <use class="half ha" href="#knotpaths" clip-path="url(#kclipA)"/>
-        <use class="half hb" href="#knotpaths" clip-path="url(#kclipB)"/>
-        <line class="cut" x1="14" y1="104" x2="112" y2="20" stroke="#FF6B1A" stroke-width="6" stroke-linecap="round"/>
+        <g class="whole" stroke="#1A1A17" stroke-width="7" stroke-linecap="round" fill="none">
+          <path d="M30 30 C60 50 60 70 90 90"/>
+          <path d="M90 30 C60 50 60 70 30 90"/>
+          <path d="M30 60 C50 60 70 60 90 60" opacity=".5"/>
+          <circle cx="60" cy="60" r="34" opacity=".25"/>
+        </g>
+        <line class="cut" x1="14" y1="104" x2="112" y2="20" stroke="#FF6B1A" stroke-width="6.5" stroke-linecap="round"/>
         <circle class="glint" cx="62" cy="62" r="6" fill="#FFE0CC"/>
       </svg>
     </div>
@@ -411,22 +398,7 @@
     </div>
 
     <div class="chapter">
-      <span class="num">iv · the launch playbook</span>
-      <h2>the four moves behind the pace</h2>
-      <p>the proven moves of fast physical rollouts, made ours:</p>
-      <div class="prec">
-        <div class="p"><div class="co">the launch pod</div><div class="ls">a small city team (a general manager owning the p&l, supply ops, demand marketing) runs a tight, numbered launch playbook. done right, that pace can hit a city a day.</div></div>
-        <div class="p"><div class="co">the launcher checklist</div><div class="ls">a launcher researches a market, signs the partners, and opens it in <b>6 to 8 weeks</b> off a repeatable checklist.</div></div>
-        <div class="p"><div class="co">validate, then scale</div><div class="ls"><b>prove one market</b> (the bay) before spreading, then scale from proven ground instead of everywhere at once.</div></div>
-        <div class="p"><div class="co">go asset-light</div><div class="ls">plug <b>existing operators</b> and spaces into the network instead of building every site.</div></div>
-      </div>
-      <p>so the corgi model is set: a small <b>launch pod</b> per market (a launcher running site to open, a host lead locking the partner space, a community lead filling the room), one <b>general manager</b> owning each city's p&l, and one <b>launch playbook</b> (this site) that gets tighter every open.</p>
-      <div class="pull">validate one market, launch lean, go asset-light. that is the whole model.</div>
-      <p><b>the demand is already inbound.</b> startup hubs are asking us to come, and a real share of the 100 are <b>corgi corners hosted inside existing cafés</b> and coworking spaces that want the partnership. free distribution, a built-in crowd, day-one goodwill.</p>
-    </div>
-
-    <div class="chapter">
-      <span class="num">v · the partnership engine</span>
+      <span class="num">iv · the partnership engine</span>
       <h2>every drink is a deal</h2>
       <p>the café barely sells coffee. it sells <b>co-branded placements</b>. every cup on the menu is a startup paying to reach founders, so openings are partly self-funding and each one feeds the insurance funnel. the real menu, today:</p>
       <div class="menu">
@@ -447,7 +419,7 @@
     </div>
 
     <div class="chapter">
-      <span class="num">vi · the real-estate engine</span>
+      <span class="num">v · the real-estate engine</span>
       <h2>every space is a deal, too</h2>
       <p>the deal runs both ways. on the demand side, startups pay to be on the menu. on the supply side, <b>landlords and retail owners come to us</b>, because a corgi café is the most valuable thing they can put in an empty space: the room their city's best builders choose to work in, every day.</p>
       <p>that flips the cost of the corner format. we don't hunt for sites and pay top rent, <b>hosts pitch corgi to come to them</b>, trading space for the foot traffic, the prestige, and an amenity their tenants brag about. demand-driven real estate is what makes placing ~64 corners realistic in six months.</p>
@@ -456,7 +428,7 @@
     </div>
 
     <div class="chapter">
-      <span class="num">vii · why a café</span>
+      <span class="num">vi · why a café</span>
       <h2>get close to the people taking the risk</h2>
       <p><b>insurance works best when it sits close to the people taking the risk</b>, in the places they already gather to compare notes and size each other up. corgi café is that place, built for the modern founder.</p>
       <p>it builds familiarity before anyone needs a policy, and turns corgi from a website into a room full of real people. founders today, then the truckers and small-business owners corgi serves next, including the latino small-business market drew reaches directly.</p>
